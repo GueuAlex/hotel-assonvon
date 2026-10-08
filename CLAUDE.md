@@ -63,7 +63,8 @@ Trois pistes proposées dans `docs/maquettes/` (sommaire : `docs/maquettes/index
   - site Next.js complet en une page : navigation avec menu mobile, hero, ruban, héritage, galerie, espaces, séjours, salles, « bientôt », contact, pied de page ;
   - image de partage générée au build, favicon ;
   - vérifié en desktop et en mobile 375 px ; lint et build OK ;
-  - repo GitHub créé et démo déployée sur Vercel.
+  - repo GitHub créé et démo déployée sur Vercel ;
+  - redéploiement automatique non branché : l'application GitHub de Vercel n'a pas accès au repo. Redéployer avec `vercel --prod --yes` depuis ce dossier.
 - Décisions :
   - catégories de chambres nommées « Catégorie I à IV » sans unité (prix « FCFA ») tant que l'hôtel n'a pas confirmé ;
   - salles nommées « Salle I à IV » ;
