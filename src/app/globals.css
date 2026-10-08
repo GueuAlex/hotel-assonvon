@@ -1,0 +1,113 @@
+@import "tailwindcss";
+
+/* Tokens du theme - piste C "Galerie de nuit" */
+@theme {
+  --color-ebene: #0c0a08;
+  --color-charbon: #17130f;
+  --color-ivoire: #efe7da;
+  --color-ocre: #c98b2b;
+  --color-terre: #a8482a;
+  --color-marbre: #d6b19c;
+
+  --ease-galerie: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@theme inline {
+  --font-display: var(--font-syne), system-ui, sans-serif;
+  --font-texte: var(--font-archivo), system-ui, sans-serif;
+}
+
+/* Marge laterale commune a toutes les sections */
+@utility gouttiere {
+  padding-inline: clamp(16px, 4vw, 56px);
+}
+
+@layer base {
+  html {
+    background: var(--color-ebene);
+    color-scheme: dark;
+  }
+  body {
+    background: var(--color-ebene);
+    color: var(--color-ivoire);
+    font-family: var(--font-texte);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  ::selection {
+    background: var(--color-ocre);
+    color: var(--color-ebene);
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-ocre);
+    outline-offset: 3px;
+  }
+}
+
+@layer components {
+  .eyebrow {
+    font-size: 13px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--color-ocre);
+  }
+
+  /* Texte en contour (titres sculpturaux) */
+  .contour {
+    color: transparent;
+    -webkit-text-stroke: 2px var(--color-ivoire);
+  }
+
+  /* Oeuvre eclairee par un projecteur : --x et --y en px dans l'element */
+  .projecteur {
+    --x: 50%;
+    --y: 40%;
+    -webkit-mask-image: radial-gradient(circle at var(--x) var(--y), #000 0%, rgb(0 0 0 / 0.92) 16%, rgb(0 0 0 / 0.22) 38%, rgb(0 0 0 / 0.07) 60%);
+    mask-image: radial-gradient(circle at var(--x) var(--y), #000 0%, rgb(0 0 0 / 0.92) 16%, rgb(0 0 0 / 0.22) 38%, rgb(0 0 0 / 0.07) 60%);
+  }
+
+  /* Etalonnage chaud commun aux photos de l'hotel */
+  .photo-galerie {
+    filter: sepia(0.22) saturate(0.95) contrast(1.15) brightness(0.95);
+  }
+
+  /* Halo d'un spot de galerie au-dessus d'une oeuvre */
+  .halo {
+    background: radial-gradient(50% 60% at 50% 0%, rgb(239 231 218 / 0.16), transparent 70%);
+  }
+}
+
+/* Lenis */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: clip;
+}
+
+/* Radar du plan d'acces */
+@keyframes onde-radar {
+  from {
+    transform: scale(0.2);
+    opacity: 0.9;
+  }
+  to {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+.onde-radar {
+  animation: onde-radar 3.6s var(--ease-galerie) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .onde-radar {
+    animation: none;
+    opacity: 0.3;
+  }
+}

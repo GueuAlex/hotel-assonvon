@@ -1,0 +1,401 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Assonvon · Piste C · Galerie de nuit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@500..800&family=Archivo:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* Tokens du theme - piste C */
+  :root {
+    --ebene: #0c0a08;
+    --charbon: #17130f;
+    --ivoire: #efe7da;
+    --ocre: #c98b2b;
+    --terre: #a8482a;
+    --marbre: #d6b19c;
+
+    --f-display: "Syne", system-ui, sans-serif;
+    --f-texte: "Archivo", system-ui, sans-serif;
+
+    --gouttiere: clamp(16px, 4vw, 56px);
+    --ease-galerie: cubic-bezier(.65, 0, .35, 1);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html.lenis, html.lenis body { height: auto; }
+  .lenis.lenis-smooth { scroll-behavior: auto !important; }
+  body {
+    background: var(--ebene); color: var(--ivoire);
+    font-family: var(--f-texte); font-size: 16px; line-height: 1.6;
+    -webkit-font-smoothing: antialiased; overflow-x: hidden;
+  }
+  a { color: inherit; text-decoration: none; }
+  img { display: block; max-width: 100%; }
+
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px var(--gouttiere); mix-blend-mode: difference;
+  }
+  .nav__logo { font-family: var(--f-display); font-weight: 800; font-size: 18px; letter-spacing: .04em; }
+  .nav__liens { display: flex; gap: 28px; font-size: 13px; text-transform: uppercase; letter-spacing: .1em; }
+  .nav__cta { font-family: var(--f-display); font-weight: 700; font-size: 14px; text-transform: uppercase; letter-spacing: .06em; border-bottom: 2px solid currentColor; padding-bottom: 2px; }
+  @media (max-width: 820px) { .nav__liens { display: none; } }
+
+  /* Hero : galerie plongee dans le noir */
+  .hero { position: relative; height: 100svh; min-height: 620px; overflow: hidden; }
+  .hero canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .hero__grille {
+    position: relative; z-index: 2; height: 100%;
+    display: grid; grid-template-columns: 1.15fr .85fr; align-items: center;
+    padding: 0 var(--gouttiere);
+  }
+  .hero__kicker { font-size: 13px; letter-spacing: .24em; text-transform: uppercase; color: var(--ocre); }
+  .hero__titre {
+    font-family: var(--f-display); font-weight: 800; text-transform: uppercase;
+    font-size: clamp(52px, 8.8vw, 200px); line-height: .82; letter-spacing: -.035em;
+    margin: 18px 0 22px;
+  }
+  .hero__titre .ligne { display: block; }
+  .hero__titre .contour { color: transparent; -webkit-text-stroke: 2px var(--ivoire); }
+  .hero__sous { font-size: clamp(17px, 1.6vw, 21px); max-width: 420px; color: rgba(239,231,218,.8); }
+  .hero__ctas { display: flex; gap: 12px; margin-top: 30px; flex-wrap: wrap; }
+  .btn {
+    display: inline-flex; padding: 16px 26px; font-family: var(--f-display); font-weight: 700;
+    text-transform: uppercase; letter-spacing: .06em; font-size: 14px;
+    transition: background .4s var(--ease-galerie), color .4s var(--ease-galerie);
+  }
+  .btn--ocre { background: var(--ocre); color: var(--ebene); }
+  .btn--ocre:hover { background: var(--ivoire); }
+  .btn--ligne { border: 1.5px solid rgba(239,231,218,.5); }
+  .btn--ligne:hover { background: var(--ivoire); color: var(--ebene); }
+
+  .masque {
+    position: relative; justify-self: center;
+    width: min(100%, 460px); aspect-ratio: 3 / 4;
+    --x: 50%; --y: 40%;
+    -webkit-mask-image: radial-gradient(circle at var(--x) var(--y), #000 0%, rgba(0,0,0,.92) 16%, rgba(0,0,0,.22) 38%, rgba(0,0,0,.07) 60%);
+            mask-image: radial-gradient(circle at var(--x) var(--y), #000 0%, rgba(0,0,0,.92) 16%, rgba(0,0,0,.22) 38%, rgba(0,0,0,.07) 60%);
+  }
+  .masque img { width: 100%; height: 100%; object-fit: cover; filter: sepia(.25) saturate(.9) contrast(1.2) brightness(.95); }
+  .masque__cartel {
+    position: absolute; right: 0; bottom: -34px; font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: rgba(239,231,218,.45);
+  }
+  @media (max-width: 820px) {
+    .hero__grille { grid-template-columns: 1fr; align-content: end; padding-bottom: 72px; }
+    .hero__titre { font-size: 14vw; }
+    .masque { position: absolute; inset: 8% 0 auto auto; width: 78vw; z-index: -1; opacity: .9; }
+    .masque__cartel { display: none; }
+  }
+
+  /* Ruban defilant */
+  .ruban { background: var(--ocre); color: var(--ebene); overflow: hidden; padding: 18px 0; transform-origin: center; }
+  .ruban__piste { display: flex; width: max-content; }
+  .ruban__piste span {
+    font-family: var(--f-display); font-weight: 800; text-transform: uppercase;
+    font-size: clamp(28px, 4.4vw, 64px); letter-spacing: -.01em; white-space: nowrap; padding-right: .5em;
+  }
+
+  /* Heritage */
+  .heritage { padding: clamp(96px, 16vw, 220px) var(--gouttiere); max-width: 1400px; }
+  .eyebrow { font-size: 13px; letter-spacing: .24em; text-transform: uppercase; color: var(--ocre); }
+  .heritage__texte {
+    margin-top: 28px; font-family: var(--f-display); font-weight: 600;
+    font-size: clamp(30px, 4.6vw, 72px); line-height: 1.08; letter-spacing: -.02em;
+  }
+  .heritage__texte .accent { color: var(--marbre); }
+
+  /* Salles : liste avec image qui suit le curseur */
+  .salles { padding: 0 var(--gouttiere) clamp(96px, 14vw, 200px); }
+  .salles__tete { display: flex; justify-content: space-between; align-items: end; gap: 24px; flex-wrap: wrap; margin-bottom: 40px; }
+  .salles__tete h2 { font-family: var(--f-display); font-weight: 800; text-transform: uppercase; font-size: clamp(40px, 6vw, 96px); line-height: .9; letter-spacing: -.03em; }
+  .salles__tete p { max-width: 360px; color: rgba(239,231,218,.7); }
+  .salle {
+    position: relative; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 16px;
+    padding: clamp(18px, 2.6vw, 30px) 0; border-top: 1px solid rgba(239,231,218,.18);
+    transition: color .5s var(--ease-galerie), padding .5s var(--ease-galerie);
+  }
+  .salle:last-of-type { border-bottom: 1px solid rgba(239,231,218,.18); }
+  .salle__n { font-family: var(--f-display); font-weight: 800; font-size: clamp(56px, 10vw, 160px); line-height: .85; letter-spacing: -.04em; }
+  .salle__n small { font-size: .22em; letter-spacing: .02em; font-weight: 600; margin-left: .3em; vertical-align: top; }
+  .salle__l { text-align: right; font-size: 14px; letter-spacing: .14em; text-transform: uppercase; color: rgba(239,231,218,.6); }
+  @media (hover: hover) {
+    .salle:hover { color: var(--ocre); padding-left: 24px; }
+  }
+  .suiveur {
+    position: fixed; left: 0; top: 0; z-index: 40; pointer-events: none;
+    width: 260px; aspect-ratio: 3 / 4; overflow: hidden; border-radius: 4px;
+    opacity: 0; transform: translate(-50%, -50%) scale(.8);
+  }
+  .suiveur img { width: 100%; height: 100%; object-fit: cover; filter: sepia(.2) contrast(1.1); }
+  @media (hover: none) { .suiveur { display: none; } }
+
+  /* Sejours */
+  .sejours { background: var(--charbon); padding: clamp(72px, 10vw, 140px) var(--gouttiere); }
+  .sejours h2 { font-family: var(--f-display); font-weight: 800; text-transform: uppercase; font-size: clamp(36px, 5vw, 80px); line-height: .92; letter-spacing: -.03em; margin-top: 16px; }
+  .sejours h2 span { color: var(--ocre); }
+  .tarifs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; margin-top: 48px; background: rgba(239,231,218,.14); }
+  .tarif { background: var(--charbon); padding: 28px 20px; }
+  .tarif b { display: block; font-family: var(--f-display); font-weight: 700; font-size: clamp(28px, 3vw, 44px); color: var(--ivoire); }
+  .tarif small { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: rgba(239,231,218,.55); }
+  @media (max-width: 720px) { .tarifs { grid-template-columns: 1fr 1fr; } }
+
+  /* Planche DA */
+  .planche { background: var(--ivoire); color: var(--ebene); padding: clamp(64px, 10vw, 140px) var(--gouttiere); }
+  .planche .eyebrow { color: var(--terre); }
+  .planche h3 { font-family: var(--f-display); font-weight: 800; text-transform: uppercase; font-size: clamp(28px, 4vw, 48px); margin: 12px 0 40px; }
+  .nuancier { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 12px; }
+  .pastille { overflow: hidden; background: #fff; }
+  .pastille__c { height: 90px; }
+  .pastille__t { padding: 10px 12px; font-size: 12px; line-height: 1.4; }
+  .pastille__t b { display: block; font-weight: 600; }
+  .typos { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; margin-top: 40px; }
+  .typo, .signature { background: #fff; padding: 28px; }
+  .typo__ex { font-size: clamp(40px, 10vw, 56px); line-height: 1; margin: 10px 0; }
+  .signature { margin-top: 24px; max-width: 900px; }
+  @media (max-width: 720px) { .typos { grid-template-columns: minmax(0, 1fr); } }
+
+  .pied { padding: 56px var(--gouttiere) 88px; display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap; color: rgba(239,231,218,.7); }
+  .pied__logo { font-family: var(--f-display); font-weight: 800; font-size: 32px; color: var(--ivoire); text-transform: uppercase; }
+  .pied__digifaz { width: 100%; padding-top: 24px; border-top: 1px solid rgba(239,231,218,.12); font-size: 12px; letter-spacing: .1em; opacity: .55; }
+
+  .badge {
+    position: fixed; left: 12px; bottom: 12px; z-index: 60; padding: 8px 14px;
+    font-size: 11px; letter-spacing: .06em; background: rgba(12,10,8,.85); color: var(--ocre);
+    border: 1px solid rgba(201,139,43,.45); backdrop-filter: blur(8px);
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="#" class="nav__logo">ASSONVON</a>
+  <div class="nav__liens"><a href="#heritage">Héritage</a><a href="#salles">Salles</a><a href="#sejours">Séjours</a></div>
+  <a class="nav__cta" href="tel:+2250748103484">Réserver</a>
+</nav>
+
+<header class="hero">
+  <canvas id="vagues" aria-hidden="true"></canvas>
+  <div class="hero__grille">
+    <div>
+      <p class="hero__kicker">Hôtel ★★★ · Yopougon · Depuis 1984</p>
+      <h1 class="hero__titre"><span class="ligne">Asson</span><span class="ligne contour">von</span></h1>
+      <p class="hero__sous">L'immortel. Quatre décennies d'hospitalité, d'art ivoirien et de grandes fêtes au cœur de Yopougon.</p>
+      <div class="hero__ctas">
+        <a class="btn btn--ocre" href="tel:+2250748103484">Réserver</a>
+        <a class="btn btn--ligne" href="#salles">Organiser un événement</a>
+      </div>
+    </div>
+    <figure class="masque">
+      <img src="assets/masque-sculpte.jpg" alt="Grand masque sculpté en bois exposé à l'hôtel Assonvon">
+      <figcaption class="masque__cartel">Masque sculpté · collection de l'hôtel</figcaption>
+    </figure>
+  </div>
+</header>
+
+<div class="ruban" aria-hidden="true">
+  <div class="ruban__piste">
+    <span>Séjours ✦ Mariages ✦ Baptêmes ✦ Conférences ✦ Piscine ✦ Restaurant ✦ Bar ✦&nbsp;</span>
+    <span>Séjours ✦ Mariages ✦ Baptêmes ✦ Conférences ✦ Piscine ✦ Restaurant ✦ Bar ✦&nbsp;</span>
+  </div>
+</div>
+
+<section class="heritage" id="heritage">
+  <p class="eyebrow">Héritage</p>
+  <p class="heritage__texte">Depuis 1984, Assonvon reçoit Abidjan. Parmi les premiers édifices touristiques de la ville, la maison a vu passer quatre décennies de voyageurs, de mariés et de familles, <span class="accent">entre marbre rose et art ivoirien.</span></p>
+</section>
+
+<section class="salles" id="salles">
+  <div class="salles__tete">
+    <h2>Quatre salles,<br>vos grands jours</h2>
+    <p>Mariages, baptêmes, réunions et conférences : des salles de 100 à 350 places, avec restaurant et bar sur place.</p>
+  </div>
+  <div class="salle"><div class="salle__n">350<small>places</small></div><div class="salle__l">Salle IV</div></div>
+  <div class="salle"><div class="salle__n">200<small>places</small></div><div class="salle__l">Salle III</div></div>
+  <div class="salle"><div class="salle__n">150<small>places</small></div><div class="salle__l">Salle II</div></div>
+  <div class="salle"><div class="salle__n">100<small>places</small></div><div class="salle__l">Salle I</div></div>
+</section>
+<div class="suiveur" aria-hidden="true"><img src="assets/hall-marbre.jpg" alt=""></div>
+
+<section class="sejours" id="sejours">
+  <p class="eyebrow">Séjours</p>
+  <h2>110 chambres,<br><span>dès 20 000 FCFA</span></h2>
+  <div class="tarifs">
+    <div class="tarif"><b>20 000</b><small>FCFA · la nuit</small></div>
+    <div class="tarif"><b>25 000</b><small>FCFA · la nuit</small></div>
+    <div class="tarif"><b>30 000</b><small>FCFA · la nuit</small></div>
+    <div class="tarif"><b>40 000</b><small>FCFA · la nuit</small></div>
+  </div>
+</section>
+
+<section class="planche">
+  <p class="eyebrow">Planche de direction artistique</p>
+  <h3>Piste C · Galerie de nuit</h3>
+  <div class="nuancier">
+    <div class="pastille"><div class="pastille__c" style="background:#0c0a08"></div><div class="pastille__t"><b>ébène</b>#0C0A08</div></div>
+    <div class="pastille"><div class="pastille__c" style="background:#17130f"></div><div class="pastille__t"><b>charbon</b>#17130F</div></div>
+    <div class="pastille"><div class="pastille__c" style="background:#c98b2b"></div><div class="pastille__t"><b>ocre</b>#C98B2B</div></div>
+    <div class="pastille"><div class="pastille__c" style="background:#a8482a"></div><div class="pastille__t"><b>terre</b>#A8482A</div></div>
+    <div class="pastille"><div class="pastille__c" style="background:#d6b19c"></div><div class="pastille__t"><b>marbre</b>#D6B19C</div></div>
+    <div class="pastille"><div class="pastille__c" style="background:#efe7da;border-bottom:1px solid #ddd2c2"></div><div class="pastille__t"><b>ivoire</b>#EFE7DA</div></div>
+  </div>
+  <div class="typos">
+    <div class="typo"><span class="eyebrow">Titres</span><div class="typo__ex" style="font-family:var(--f-display);font-weight:800;text-transform:uppercase">Asson</div>Syne ExtraBold : une grotesque large et sculpturale, à l'esprit galerie d'art contemporain.</div>
+    <div class="typo"><span class="eyebrow">Textes</span><div class="typo__ex" style="font-family:var(--f-texte);font-weight:500">Salles</div>Archivo : une sans-serif robuste et lisible, qui équilibre l'expressivité des titres.</div>
+  </div>
+  <div class="signature"><span class="eyebrow">Animation signature</span><p style="margin-top:10px">Le hero est une <b>galerie plongée dans le noir</b> : le curseur devient un <b>projecteur</b> qui révèle le grand masque sculpté de l'hôtel. Sur mobile, la lumière se déplace d'elle-même. En fond, des <b>lignes ondulantes</b> reprennent le motif de vagues des fauteuils du hall et se gonflent sous la lumière. Un ruban ocre défile plus ou moins vite selon la vitesse du scroll, et le texte « Héritage » s'allume mot après mot.</p></div>
+</section>
+
+<footer class="pied">
+  <div><div class="pied__logo">Assonvon</div><p>Hôtel ★★★ · Yopougon, depuis 1984</p></div>
+  <div><p>Rue O111, Yopougon Assonvon, Abidjan</p><p>Réception : <a href="tel:+2250748103484">07 48 10 34 84</a></p></div>
+  <p class="pied__digifaz">Proposition de site réalisée par Digifaz</p>
+</footer>
+
+<a class="badge" href="index.html">Maquette · Piste C · Galerie de nuit</a>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/SplitText.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.26/dist/lenis.min.js"></script>
+<script>
+  gsap.registerPlugin(ScrollTrigger, SplitText);
+  const reduit = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const tactile = matchMedia("(hover: none)").matches;
+
+  if (!reduit) {
+    const lenis = new Lenis({ autoRaf: false, lerp: 0.1 });
+    lenis.on("scroll", ScrollTrigger.update);
+    gsap.ticker.add((t) => lenis.raf(t * 1000));
+    gsap.ticker.lagSmoothing(0);
+  }
+
+  // ---------- Projecteur : position de la lumiere (en px dans la fenetre) ----------
+  const lumiere = { x: innerWidth * 0.7, y: innerHeight * 0.4 };
+  const masque = document.querySelector(".masque");
+  function majMasque() {
+    const r = masque.getBoundingClientRect();
+    masque.style.setProperty("--x", (lumiere.x - r.left) + "px");
+    masque.style.setProperty("--y", (lumiere.y - r.top) + "px");
+  }
+  if (tactile || reduit) {
+    // Sur mobile la lumiere balaie le masque toute seule
+    const r = () => masque.getBoundingClientRect();
+    gsap.to(lumiere, {
+      x: () => r().left + r().width * 0.75, duration: 3.2, ease: "sine.inOut", yoyo: true, repeat: -1,
+      startAt: { x: r().left + r().width * 0.25 }
+    });
+    gsap.to(lumiere, {
+      y: () => r().top + r().height * 0.6, duration: 2.3, ease: "sine.inOut", yoyo: true, repeat: -1,
+      startAt: { y: r().top + r().height * 0.3 }
+    });
+  } else {
+    const qx = gsap.quickTo(lumiere, "x", { duration: 0.6, ease: "power3.out" });
+    const qy = gsap.quickTo(lumiere, "y", { duration: 0.6, ease: "power3.out" });
+    addEventListener("pointermove", (e) => { qx(e.clientX); qy(e.clientY); });
+  }
+  gsap.ticker.add(majMasque);
+
+  // ---------- Lignes ondulantes (motif des fauteuils du hall) ----------
+  const cv = document.getElementById("vagues");
+  const ctx = cv.getContext("2d");
+  let L, H, dpr;
+  function redim() {
+    dpr = Math.min(devicePixelRatio, 2);
+    L = cv.clientWidth; H = cv.clientHeight;
+    cv.width = L * dpr; cv.height = H * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  redim(); addEventListener("resize", redim);
+  let heroVisible = true;
+  new IntersectionObserver(([e]) => { heroVisible = e.isIntersecting; }).observe(cv);
+  const t0 = performance.now();
+  function dessiner() {
+    if (!heroVisible) return;
+    const t = reduit ? 0 : (performance.now() - t0) / 1000;
+    ctx.clearRect(0, 0, L, H);
+    const nb = Math.round(H / 26);
+    const pas = H / nb;
+    const rayon = Math.max(L, H) * 0.28;
+    for (let i = -1; i <= nb + 1; i++) {
+      const base = i * pas;
+      ctx.beginPath();
+      for (let x = -10; x <= L + 10; x += 8) {
+        const dx = x - lumiere.x, dy = base - lumiere.y;
+        const proche = Math.exp(-(dx * dx + dy * dy) / (2 * rayon * rayon));
+        const amp = 7 + proche * 22;
+        const y = base + Math.sin(x * 0.012 + i * 0.9 + t * 0.6) * amp + Math.sin(x * 0.031 - t * 0.4 + i) * 3;
+        x === -10 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+      }
+      // Les lignes s'eclairent pres du projecteur
+      const dy = base - lumiere.y;
+      const alpha = 0.07 + 0.28 * Math.exp(-(dy * dy) / (2 * rayon * rayon));
+      ctx.strokeStyle = `rgba(239,231,218,${alpha})`;
+      ctx.lineWidth = 1.2;
+      ctx.stroke();
+    }
+  }
+  gsap.ticker.add(dessiner);
+
+  // ---------- Intro ----------
+  document.fonts.ready.then(() => {
+    const split = SplitText.create(".hero__titre .ligne", { type: "chars", mask: "chars" });
+    if (!reduit) {
+      gsap.timeline({ defaults: { ease: "expo.out" } })
+        .from(".masque", { autoAlpha: 0, scale: 1.08, duration: 2.2, ease: "power2.out" })
+        .from(split.chars, { yPercent: 110, duration: 1.3, stagger: 0.05 }, 0.2)
+        .from(".hero__kicker, .hero__sous, .hero__ctas", { y: 24, autoAlpha: 0, duration: 1, stagger: 0.1 }, 0.6);
+    }
+
+    // Heritage : les mots s'allument au scroll
+    const mots = SplitText.create(".heritage__texte", { type: "words" });
+    gsap.fromTo(mots.words, { opacity: 0.14 }, {
+      opacity: 1, stagger: 0.08, ease: "none",
+      scrollTrigger: { trigger: ".heritage__texte", start: "top 78%", end: "bottom 45%", scrub: true }
+    });
+  });
+
+  // ---------- Ruban : vitesse et inclinaison selon le scroll ----------
+  const boucle = gsap.to(".ruban__piste", { xPercent: -50, duration: 24, ease: "none", repeat: -1 });
+  if (!reduit) {
+    const incliner = gsap.quickTo(".ruban", "skewY", { duration: 0.5, ease: "power3.out" });
+    ScrollTrigger.create({
+      onUpdate(self) {
+        const v = self.getVelocity();
+        incliner(gsap.utils.clamp(-4, 4, v / -300));
+        gsap.to(boucle, {
+          timeScale: (v < 0 ? -1 : 1) * (1 + Math.min(Math.abs(v) / 300, 5)),
+          duration: 0.2, overwrite: true,
+          onComplete: () => gsap.to(boucle, { timeScale: 1, duration: 1.2 })
+        });
+      }
+    });
+  } else {
+    boucle.pause();
+  }
+
+  // ---------- Salles : image qui suit le curseur ----------
+  const suiveur = document.querySelector(".suiveur");
+  const sx = gsap.quickTo(suiveur, "x", { duration: 0.5, ease: "power3.out" });
+  const sy = gsap.quickTo(suiveur, "y", { duration: 0.5, ease: "power3.out" });
+  gsap.set(suiveur, { xPercent: -50, yPercent: -50 });
+  addEventListener("pointermove", (e) => { sx(e.clientX); sy(e.clientY); });
+  document.querySelectorAll(".salle").forEach((s) => {
+    s.addEventListener("pointerenter", () => gsap.to(suiveur, { autoAlpha: 1, scale: 1, rotate: gsap.utils.random(-6, 6), duration: 0.5, ease: "power3.out" }));
+    s.addEventListener("pointerleave", () => gsap.to(suiveur, { autoAlpha: 0, scale: 0.8, duration: 0.4 }));
+  });
+  gsap.from(".salle", {
+    y: 60, autoAlpha: 0, duration: 1.1, stagger: 0.1, ease: "expo.out",
+    scrollTrigger: { trigger: ".salles", start: "top 75%" }
+  });
+  gsap.from(".tarif", {
+    y: 40, autoAlpha: 0, duration: 1, stagger: 0.08, ease: "expo.out",
+    scrollTrigger: { trigger: ".tarifs", start: "top 85%" }
+  });
+</script>
+</body>
+</html>

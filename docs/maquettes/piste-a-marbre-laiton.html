@@ -1,0 +1,619 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Assonvon · Piste A · Marbre & Laiton</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* Tokens du theme - piste A */
+  :root {
+    --ebene: #160a07;
+    --rosso: #5e2619;
+    --marbre-rose: #c98d77;
+    --ivoire: #f5ede4;
+    --ivoire-2: #ebdfd2;
+    --laiton: #c99a4b;
+    --laiton-clair: #f0d49b;
+    --laiton-sombre: #7a5520;
+    --velours: #8e1b22;
+    --encre: #2a1712;
+
+    --f-display: "Bodoni Moda", "Didot", serif;
+    --f-texte: "Instrument Sans", system-ui, sans-serif;
+
+    --gouttiere: clamp(16px, 4vw, 56px);
+    --ease-luxe: cubic-bezier(.16, 1, .3, 1);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html.lenis, html.lenis body { height: auto; }
+  .lenis.lenis-smooth { scroll-behavior: auto !important; }
+  body {
+    background: var(--ebene);
+    color: var(--ivoire);
+    font-family: var(--f-texte);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  a { color: inherit; text-decoration: none; }
+  img { display: block; max-width: 100%; }
+
+  /* Loader */
+  .loader {
+    position: fixed; inset: 0; z-index: 100;
+    background: var(--ebene);
+    display: grid; place-items: center;
+  }
+  .loader__inner { text-align: center; }
+  .loader__year { font-family: var(--f-display); font-style: italic; font-size: 20px; letter-spacing: .3em; color: var(--laiton); }
+  .loader__line { width: 160px; height: 1px; margin: 14px auto 0; background: var(--laiton); transform: scaleX(0); transform-origin: left; }
+
+  /* Navigation */
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px var(--gouttiere);
+    mix-blend-mode: difference;
+  }
+  .nav__logo { font-family: var(--f-display); font-style: italic; font-size: 22px; letter-spacing: .02em; }
+  .nav__liens { display: flex; gap: 32px; font-size: 13px; letter-spacing: .14em; text-transform: uppercase; }
+  .nav__cta {
+    font-size: 13px; letter-spacing: .14em; text-transform: uppercase;
+    padding: 10px 18px; border: 1px solid currentColor; border-radius: 999px;
+  }
+  @media (max-width: 820px) { .nav__liens { display: none; } }
+
+  /* Hero */
+  .hero { position: relative; height: 100svh; min-height: 560px; overflow: hidden; }
+  .hero canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .hero__voile {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(48% 34% at 50% 52%, rgba(22,10,7,.62) 0%, rgba(22,10,7,.25) 60%, transparent 100%),
+      radial-gradient(120% 80% at 50% 45%, transparent 30%, rgba(22,10,7,.55) 100%);
+    pointer-events: none;
+  }
+  .hero__contenu {
+    position: relative; z-index: 2; height: 100%;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; padding: 0 var(--gouttiere);
+  }
+  .hero__kicker {
+    font-size: 12px; letter-spacing: .32em; text-transform: uppercase; color: var(--laiton-clair);
+    margin-bottom: clamp(12px, 2vw, 24px);
+  }
+  .hero__titre {
+    font-family: var(--f-display); font-style: italic; font-weight: 500;
+    font-size: clamp(64px, 17vw, 270px); line-height: .9; letter-spacing: -.02em;
+    color: var(--laiton-clair);
+    text-shadow: 0 2px 30px rgba(0,0,0,.25);
+  }
+  /* Patine de laiton appliquee apres la revelation */
+  .hero__titre.is-laiton {
+    background: linear-gradient(100deg, var(--laiton-sombre) 0%, var(--laiton) 25%, #fff3d6 45%, var(--laiton) 60%, var(--laiton-sombre) 100%);
+    background-size: 250% 100%;
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    animation: patine 7s var(--ease-luxe) infinite;
+  }
+  @keyframes patine { 0% { background-position: 100% 0; } 60%, 100% { background-position: 0% 0; } }
+  .hero__sous {
+    margin-top: clamp(10px, 2vw, 20px);
+    font-family: var(--f-display); font-size: clamp(18px, 2.2vw, 28px); font-style: italic; color: var(--ivoire);
+  }
+  .hero__ctas { display: flex; gap: 12px; margin-top: clamp(24px, 4vw, 40px); flex-wrap: wrap; justify-content: center; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 15px 26px; border-radius: 999px;
+    font-size: 13px; letter-spacing: .14em; text-transform: uppercase; font-weight: 500;
+    transition: background .4s var(--ease-luxe), color .4s var(--ease-luxe), transform .4s var(--ease-luxe);
+  }
+  .btn--laiton { background: var(--laiton); color: var(--ebene); }
+  .btn--laiton:hover { background: var(--laiton-clair); }
+  .btn--ligne { border: 1px solid rgba(245,237,228,.4); }
+  .btn--ligne:hover { background: rgba(245,237,228,.1); }
+  .hero__cordon {
+    position: absolute; left: 0; right: 0; bottom: 56px; z-index: 2;
+    width: 100%; height: clamp(80px, 15vw, 200px); pointer-events: none;
+  }
+  .hero__bas {
+    position: absolute; left: var(--gouttiere); right: var(--gouttiere); bottom: 20px; z-index: 3;
+    display: flex; justify-content: space-between;
+    font-size: 11px; letter-spacing: .24em; text-transform: uppercase; color: rgba(245,237,228,.65);
+  }
+
+  /* Sections communes */
+  section { position: relative; }
+  .eyebrow { font-size: 12px; letter-spacing: .32em; text-transform: uppercase; color: var(--laiton); }
+  .h2 {
+    font-family: var(--f-display); font-weight: 400;
+    font-size: clamp(40px, 6.5vw, 104px); line-height: .98; letter-spacing: -.02em;
+  }
+  .h2 em { color: var(--laiton); }
+
+  /* Depuis 1984 */
+  .depuis { height: 100svh; display: grid; place-items: center; overflow: hidden; background: var(--ebene); }
+  .depuis__grille {
+    width: 100%; padding: 0 var(--gouttiere);
+    display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 24px;
+  }
+  .depuis__label { font-family: var(--f-display); font-style: italic; font-size: clamp(22px, 3vw, 40px); color: var(--laiton); }
+  .depuis__annee {
+    font-family: var(--f-display); font-weight: 400; font-variant-numeric: lining-nums tabular-nums;
+    font-size: clamp(110px, 27vw, 420px); line-height: .8; letter-spacing: -.04em;
+    color: var(--ivoire);
+  }
+  .depuis__texte { max-width: 340px; justify-self: end; color: rgba(245,237,228,.78); }
+  .depuis__ans {
+    position: absolute; bottom: 12vh; left: 50%; transform: translateX(-50%);
+    font-size: 12px; letter-spacing: .32em; text-transform: uppercase; color: var(--laiton-clair); opacity: 0;
+  }
+  @media (max-width: 820px) {
+    .depuis__grille { grid-template-columns: 1fr; text-align: center; }
+    .depuis__texte { justify-self: center; }
+  }
+
+  /* Le hall */
+  .hall {
+    padding: clamp(80px, 14vw, 200px) var(--gouttiere);
+    display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 6vw, 96px); align-items: center;
+    background: var(--ebene);
+  }
+  .hall__texte p { margin-top: 28px; max-width: 460px; color: rgba(245,237,228,.78); font-size: 17px; }
+  .hall__visuel { position: relative; }
+  .arche {
+    border-radius: 999px 999px 8px 8px; overflow: hidden;
+    aspect-ratio: 3 / 4; box-shadow: 0 40px 80px rgba(0,0,0,.45);
+    outline: 1px solid rgba(201,154,75,.5); outline-offset: 10px;
+  }
+  .arche__clip { width: 100%; height: 100%; overflow: hidden; }
+  .arche img, .medaillon img {
+    width: 100%; height: 100%; object-fit: cover;
+    filter: sepia(.18) saturate(1.05) contrast(1.06) brightness(.95);
+  }
+  .medaillon {
+    position: absolute; left: -12%; bottom: -8%; width: 38%;
+    aspect-ratio: 3 / 4; border-radius: 999px; overflow: hidden;
+    border: 6px solid var(--ebene); box-shadow: 0 20px 50px rgba(0,0,0,.5);
+  }
+  .legende {
+    position: absolute; right: 0; bottom: -40px;
+    font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: rgba(245,237,228,.5);
+  }
+  @media (max-width: 820px) {
+    .hall { grid-template-columns: 1fr; }
+    .medaillon { left: -4%; }
+  }
+
+  /* Sejours */
+  .sejours { background: var(--ivoire); color: var(--encre); padding: clamp(80px, 12vw, 180px) var(--gouttiere); }
+  .sejours .eyebrow { color: var(--rosso); }
+  .sejours .h2 em { color: var(--velours); }
+  .sejours__tete { display: flex; justify-content: space-between; align-items: end; gap: 32px; flex-wrap: wrap; margin-bottom: clamp(40px, 6vw, 80px); }
+  .sejours__tete p { max-width: 360px; color: rgba(42,23,18,.75); }
+  .rangee {
+    position: relative; display: grid; grid-template-columns: 80px 1fr auto; align-items: baseline; gap: 24px;
+    padding: clamp(20px, 3vw, 34px) 0; border-top: 1px solid rgba(42,23,18,.18); cursor: default;
+  }
+  .rangee:last-child { border-bottom: 1px solid rgba(42,23,18,.18); }
+  .rangee::after {
+    content: ""; position: absolute; left: 0; top: -1px; height: 1px; width: 100%;
+    background: var(--laiton); transform: scaleX(0); transform-origin: left;
+    transition: transform .8s var(--ease-luxe);
+  }
+  .rangee:hover::after { transform: scaleX(1); }
+  .rangee__num { font-family: var(--f-display); font-style: italic; font-size: 20px; color: var(--rosso); }
+  .rangee__nom { font-family: var(--f-display); font-size: clamp(28px, 4vw, 56px); line-height: 1; transition: transform .8s var(--ease-luxe); }
+  .rangee:hover .rangee__nom { transform: translateX(16px); font-style: italic; }
+  .rangee__prix { text-align: right; font-family: var(--f-display); font-size: clamp(26px, 3.6vw, 52px); font-variant-numeric: lining-nums; }
+  .rangee__prix small { display: block; font-family: var(--f-texte); font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: rgba(42,23,18,.6); }
+  .note { margin-top: 24px; font-size: 13px; color: rgba(42,23,18,.55); font-style: italic; }
+  .atouts { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 40px; }
+  .atout { padding: 10px 18px; border: 1px solid rgba(42,23,18,.25); border-radius: 999px; font-size: 13px; letter-spacing: .08em; }
+  @media (max-width: 620px) {
+    .rangee { grid-template-columns: 1fr auto; }
+    .rangee__num { display: none; }
+  }
+
+  /* Salles */
+  .salles { padding: clamp(80px, 12vw, 180px) var(--gouttiere); background: var(--ebene); text-align: center; }
+  .salles .h2 { margin: 20px auto 0; max-width: 900px; }
+  .salles__sous { margin-top: 20px; color: rgba(245,237,228,.7); }
+  .capacites { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: clamp(48px, 7vw, 96px); }
+  .capacite { padding: 32px 12px; border: 1px solid rgba(201,154,75,.3); border-radius: 999px 999px 12px 12px; }
+  .capacite__n { font-family: var(--f-display); font-size: clamp(44px, 6vw, 88px); line-height: 1; color: var(--laiton-clair); font-variant-numeric: lining-nums tabular-nums; }
+  .capacite__l { font-size: 11px; letter-spacing: .24em; text-transform: uppercase; color: rgba(245,237,228,.6); margin-top: 8px; }
+  .bientot { margin-top: 56px; font-family: var(--f-display); font-style: italic; font-size: clamp(18px, 2vw, 24px); color: var(--marbre-rose); }
+  @media (max-width: 720px) { .capacites { grid-template-columns: repeat(2, 1fr); } }
+
+  /* Planche DA */
+  .planche { background: var(--ivoire-2); color: var(--encre); padding: clamp(64px, 10vw, 140px) var(--gouttiere); }
+  .planche h3 { font-family: var(--f-display); font-size: clamp(28px, 4vw, 48px); font-weight: 400; margin: 12px 0 40px; }
+  .planche .eyebrow { color: var(--rosso); }
+  .nuancier { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 12px; }
+  .pastille { border-radius: 14px; overflow: hidden; background: #fff; box-shadow: 0 1px 0 rgba(0,0,0,.06); }
+  .pastille__c { height: 90px; }
+  .pastille__t { padding: 10px 12px; font-size: 12px; line-height: 1.4; }
+  .pastille__t b { display: block; font-weight: 600; }
+  .typos { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; margin-top: 40px; }
+  .typo { background: #fff; border-radius: 14px; padding: 28px; }
+  .typo__ex { font-size: clamp(40px, 10vw, 56px); line-height: 1; margin: 10px 0; }
+  .signature { margin-top: 24px; background: #fff; border-radius: 14px; padding: 28px; max-width: 900px; }
+  @media (max-width: 720px) { .typos { grid-template-columns: minmax(0, 1fr); } }
+
+  /* Pied de page */
+  .pied { padding: 56px var(--gouttiere) 88px; background: var(--ebene); display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap; font-size: 14px; color: rgba(245,237,228,.7); }
+  .pied__logo { font-family: var(--f-display); font-style: italic; font-size: 28px; color: var(--laiton-clair); }
+  .pied__digifaz { width: 100%; padding-top: 24px; border-top: 1px solid rgba(245,237,228,.12); font-size: 12px; letter-spacing: .12em; color: rgba(245,237,228,.45); }
+
+  /* Badge de maquette */
+  .badge {
+    position: fixed; left: 12px; bottom: 12px; z-index: 60;
+    padding: 8px 14px; border-radius: 999px; font-size: 11px; letter-spacing: .08em;
+    background: rgba(22,10,7,.8); color: var(--laiton-clair); border: 1px solid rgba(201,154,75,.4);
+    backdrop-filter: blur(8px);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero__titre.is-laiton { animation: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="loader" aria-hidden="true">
+  <div class="loader__inner">
+    <div class="loader__year">MCMLXXXIV</div>
+    <div class="loader__line"></div>
+  </div>
+</div>
+
+<nav class="nav">
+  <a href="#" class="nav__logo">Assonvon</a>
+  <div class="nav__liens">
+    <a href="#sejours">Séjours</a>
+    <a href="#salles">Salles</a>
+    <a href="#hall">L'hôtel</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <a class="nav__cta" href="tel:+2250748103484">Réserver</a>
+</nav>
+
+<header class="hero">
+  <canvas id="marbre" aria-hidden="true"></canvas>
+  <div class="hero__voile"></div>
+  <div class="hero__contenu">
+    <p class="hero__kicker">Complexe hôtelier ★★★ · Yopougon, Abidjan</p>
+    <h1 class="hero__titre">Assonvon</h1>
+    <p class="hero__sous">L'immortel, depuis 1984.</p>
+    <div class="hero__ctas">
+      <a class="btn btn--laiton" href="tel:+2250748103484">Réserver un séjour</a>
+      <a class="btn btn--ligne" href="#hall">Découvrir l'hôtel</a>
+    </div>
+  </div>
+  <svg class="hero__cordon" viewBox="0 0 1000 240" preserveAspectRatio="xMidYMax meet" aria-hidden="true">
+    <defs>
+      <linearGradient id="laiton" x1="0" x2="1">
+        <stop offset="0" stop-color="#7a5520"/><stop offset=".45" stop-color="#f3d9a4"/>
+        <stop offset=".7" stop-color="#c99a4b"/><stop offset="1" stop-color="#6b4a1c"/>
+      </linearGradient>
+      <linearGradient id="velours" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#c22f39"/><stop offset="1" stop-color="#5e0f15"/>
+      </linearGradient>
+    </defs>
+    <g class="poteau">
+      <ellipse cx="70" cy="232" rx="36" ry="7" fill="url(#laiton)"/>
+      <rect x="64" y="72" width="12" height="160" rx="3" fill="url(#laiton)"/>
+      <circle cx="70" cy="62" r="15" fill="url(#laiton)"/>
+    </g>
+    <g class="poteau">
+      <ellipse cx="930" cy="232" rx="36" ry="7" fill="url(#laiton)"/>
+      <rect x="924" y="72" width="12" height="160" rx="3" fill="url(#laiton)"/>
+      <circle cx="930" cy="62" r="15" fill="url(#laiton)"/>
+    </g>
+    <path class="cordon" d="M 84 92 Q 500 212 916 92" fill="none" stroke="url(#velours)" stroke-width="13" stroke-linecap="round"/>
+  </svg>
+  <div class="hero__bas">
+    <span>5°19'58" N · 4°04'04" O</span>
+    <span>Défiler</span>
+  </div>
+</header>
+
+<section class="depuis" aria-label="Depuis 1984">
+  <div class="depuis__grille">
+    <div class="depuis__label">Depuis</div>
+    <div class="depuis__annee">2026</div>
+    <p class="depuis__texte">Parmi les premiers édifices touristiques d'Abidjan, Assonvon accueille voyageurs, mariés et familles au cœur de Yopougon.</p>
+  </div>
+  <div class="depuis__ans">42 ans d'hospitalité</div>
+</section>
+
+<section class="hall" id="hall">
+  <div class="hall__texte">
+    <p class="eyebrow">Le hall</p>
+    <h2 class="h2 split-lignes">Marbre rose,<br><em>laiton</em> &amp; velours</h2>
+    <p class="split-lignes">Dès l'entrée, le ton est donné : un marbre veiné de rose, des cordons de velours et l'art ivoirien en majesté. Un cadre somptueux pour des séjours inoubliables.</p>
+  </div>
+  <div class="hall__visuel">
+    <div class="arche"><div class="arche__clip"><img src="assets/hall-marbre.jpg" alt="Hall de l'hôtel Assonvon, sol et colonnes en marbre rose"></div></div>
+    <div class="medaillon"><img src="assets/masque-sculpte.jpg" alt="Grand masque sculpté en bois exposé dans le hall"></div>
+    <span class="legende">Art ivoirien · le hall</span>
+  </div>
+</section>
+
+<section class="sejours" id="sejours">
+  <div class="sejours__tete">
+    <div>
+      <p class="eyebrow">Séjours</p>
+      <h2 class="h2 split-lignes" style="margin-top:16px">110 chambres,<br><em>quatre</em> façons de séjourner</h2>
+    </div>
+    <p>Des chambres dotées d'équipements modernes, à quelques pas de la piscine, du restaurant et du bar.</p>
+  </div>
+  <div class="tarifs">
+    <div class="rangee"><span class="rangee__num">I</span><span class="rangee__nom">Classique</span><span class="rangee__prix">20 000<small>FCFA · la nuit</small></span></div>
+    <div class="rangee"><span class="rangee__num">II</span><span class="rangee__nom">Confort</span><span class="rangee__prix">25 000<small>FCFA · la nuit</small></span></div>
+    <div class="rangee"><span class="rangee__num">III</span><span class="rangee__nom">Supérieure</span><span class="rangee__prix">30 000<small>FCFA · la nuit</small></span></div>
+    <div class="rangee"><span class="rangee__num">IV</span><span class="rangee__nom">Prestige</span><span class="rangee__prix">40 000<small>FCFA · la nuit</small></span></div>
+  </div>
+  <p class="note">Maquette : noms de catégories provisoires, à confirmer avec l'hôtel.</p>
+  <div class="atouts">
+    <span class="atout">Piscine</span><span class="atout">Restaurant</span><span class="atout">Bar</span><span class="atout">Équipements modernes</span>
+  </div>
+</section>
+
+<section class="salles" id="salles">
+  <p class="eyebrow">Salles de cérémonie</p>
+  <h2 class="h2 split-lignes">Des salles à la mesure de <em>vos grands jours</em></h2>
+  <p class="salles__sous">Mariages, baptêmes, réunions et conférences.</p>
+  <div class="capacites">
+    <div class="capacite"><div class="capacite__n" data-n="100">100</div><div class="capacite__l">places</div></div>
+    <div class="capacite"><div class="capacite__n" data-n="150">150</div><div class="capacite__l">places</div></div>
+    <div class="capacite"><div class="capacite__n" data-n="200">200</div><div class="capacite__l">places</div></div>
+    <div class="capacite"><div class="capacite__n" data-n="350">350</div><div class="capacite__l">places</div></div>
+  </div>
+  <p class="bientot">Bientôt : une piscine olympique et une salle de cinéma.</p>
+</section>
+
+<section class="planche">
+  <p class="eyebrow">Planche de direction artistique</p>
+  <h3>Piste A · Marbre &amp; Laiton</h3>
+  <div class="nuancier">
+    <div class="pastille"><div class="pastille__c" style="background:#160a07"></div><div class="pastille__t"><b>ébène</b>#160A07</div></div>
+    <div class="pastille"><div class="pastille__c" style="background:#5e2619"></div><div class="pastille__t"><b>rosso</b>#5E2619</div></div>
+    <div class="pastille"><div class="pastille__c" style="background:#c98d77"></div><div class="pastille__t"><b>marbre-rose</b>#C98D77</div></div>
+    <div class="pastille"><div class="pastille__c" style="background:#c99a4b"></div><div class="pastille__t"><b>laiton</b>#C99A4B</div></div>
+    <div class="pastille"><div class="pastille__c" style="background:#f0d49b"></div><div class="pastille__t"><b>laiton-clair</b>#F0D49B</div></div>
+    <div class="pastille"><div class="pastille__c" style="background:#8e1b22"></div><div class="pastille__t"><b>velours</b>#8E1B22</div></div>
+    <div class="pastille"><div class="pastille__c" style="background:#f5ede4;border-bottom:1px solid #e5d9cc"></div><div class="pastille__t"><b>ivoire</b>#F5EDE4</div></div>
+  </div>
+  <div class="typos">
+    <div class="typo"><span class="eyebrow">Titres</span><div class="typo__ex" style="font-family:var(--f-display);font-style:italic">Assonvon</div>Bodoni Moda : didone à fort contraste, l'élégance des grands hôtels des années 80.</div>
+    <div class="typo"><span class="eyebrow">Textes</span><div class="typo__ex" style="font-family:var(--f-texte);font-weight:500">Séjours</div>Instrument Sans : grotesque nette et contemporaine, très lisible sur mobile.</div>
+  </div>
+  <div class="signature"><span class="eyebrow">Animation signature</span><p style="margin-top:10px">Un <b>marbre rose vivant</b> (shader WebGL généré en temps réel, inspiré du marbre du hall) dont les veines bougent lentement et dont le reflet suit la souris. Le titre se révèle lettre par lettre puis prend une <b>patine de laiton</b>. Un <b>cordon de velours</b> se tend entre deux poteaux en laiton. Au scroll, les années défilent de 2026 à 1984.</p></div>
+</section>
+
+<footer class="pied" id="contact">
+  <div>
+    <div class="pied__logo">Assonvon</div>
+    <p>Complexe hôtelier ★★★ depuis 1984</p>
+  </div>
+  <div>
+    <p>Rue O111, Yopougon Assonvon, Abidjan</p>
+    <p>Réception : <a href="tel:+2250748103484">07 48 10 34 84</a></p>
+  </div>
+  <p class="pied__digifaz">Proposition de site réalisée par Digifaz</p>
+</footer>
+
+<a class="badge" href="index.html">Maquette · Piste A · Marbre &amp; Laiton</a>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/SplitText.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/DrawSVGPlugin.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.26/dist/lenis.min.js"></script>
+<script>
+  gsap.registerPlugin(ScrollTrigger, SplitText, DrawSVGPlugin);
+  const reduit = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // Defilement fluide synchronise avec le ticker GSAP
+  if (!reduit) {
+    const lenis = new Lenis({ autoRaf: false, lerp: 0.1 });
+    lenis.on("scroll", ScrollTrigger.update);
+    gsap.ticker.add((t) => lenis.raf(t * 1000));
+    gsap.ticker.lagSmoothing(0);
+  }
+
+  // ---------- Shader de marbre rose ----------
+  const canvas = document.getElementById("marbre");
+  const gl = canvas.getContext("webgl", { antialias: false, alpha: false });
+  const frag = `
+    precision highp float;
+    uniform vec2 uRes;
+    uniform float uTime;
+    uniform vec2 uMouse;
+    float hash(vec2 p){ p = fract(p*vec2(234.34, 435.345)); p += dot(p, p+34.23); return fract(p.x*p.y); }
+    float noise(vec2 p){
+      vec2 i = floor(p); vec2 f = fract(p); vec2 u = f*f*(3.0-2.0*f);
+      return mix(mix(hash(i), hash(i+vec2(1.0,0.0)), u.x), mix(hash(i+vec2(0.0,1.0)), hash(i+vec2(1.0,1.0)), u.x), u.y);
+    }
+    float fbm(vec2 p){
+      float v = 0.0; float a = 0.5; mat2 m = mat2(1.6, 1.2, -1.2, 1.6);
+      for (int i = 0; i < 6; i++) { v += a*noise(p); p = m*p; a *= 0.5; }
+      return v;
+    }
+    void main(){
+      vec2 uv = (gl_FragCoord.xy - 0.5*uRes) / uRes.y;
+      float t = uTime*0.025;
+      vec2 p = uv*1.35 + uMouse*0.06;
+      vec2 q = vec2(fbm(p + vec2(0.0, t)), fbm(p + vec2(5.2, 1.3) - t));
+      vec2 r = vec2(fbm(p + 3.5*q + vec2(1.7, 9.2) + 0.6*t), fbm(p + 3.5*q + vec2(8.3, 2.8) - 0.4*t));
+      float f = fbm(p + 3.0*r);
+      // Veines principales et veines fines
+      float l1 = abs(sin((p.x*1.1 + p.y*0.5 + f*4.2 + r.x*2.0)*3.14159*1.1));
+      float l2 = abs(sin((p.y*2.0 - p.x*0.7 + f*6.0 + q.y*3.0)*3.14159*2.0));
+      float veine = pow(1.0 - l1, 22.0);
+      float veineFine = pow(1.0 - l2, 60.0);
+      vec3 sombre = vec3(0.10, 0.04, 0.03);
+      vec3 rosso = vec3(0.38, 0.15, 0.10);
+      vec3 rose = vec3(0.70, 0.43, 0.34);
+      vec3 col = mix(sombre, rosso, smoothstep(0.25, 0.78, f));
+      col = mix(col, rose, smoothstep(0.55, 0.95, r.y)*0.55);
+      col = mix(col, vec3(0.95, 0.86, 0.80), clamp(veine*0.75 + veineFine*0.35, 0.0, 1.0));
+      // Reflet poli qui suit la souris
+      vec2 m = uMouse*vec2(uRes.x/uRes.y, 1.0)*0.5;
+      float d = length(uv - m);
+      col += vec3(1.0, 0.85, 0.68)*0.11*exp(-d*d*5.0);
+      // Vignettage et grain
+      col *= 1.0 - 0.5*dot(uv*vec2(0.75, 1.0), uv*vec2(0.75, 1.0));
+      col += (hash(gl_FragCoord.xy + fract(uTime)) - 0.5)*0.03;
+      gl_FragColor = vec4(col, 1.0);
+    }`;
+  const vert = "attribute vec2 p; void main(){ gl_Position = vec4(p, 0.0, 1.0); }";
+
+  function compiler(type, src) {
+    const s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s);
+    if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) console.error(gl.getShaderInfoLog(s));
+    return s;
+  }
+  if (gl) {
+    const prog = gl.createProgram();
+    gl.attachShader(prog, compiler(gl.VERTEX_SHADER, vert));
+    gl.attachShader(prog, compiler(gl.FRAGMENT_SHADER, frag));
+    gl.linkProgram(prog); gl.useProgram(prog);
+    const buf = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 3,-1, -1,3]), gl.STATIC_DRAW);
+    const loc = gl.getAttribLocation(prog, "p");
+    gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+    const uRes = gl.getUniformLocation(prog, "uRes");
+    const uTime = gl.getUniformLocation(prog, "uTime");
+    const uMouse = gl.getUniformLocation(prog, "uMouse");
+
+    // Resolution reduite sur mobile pour garder 60 i/s
+    const echelle = () => Math.min(devicePixelRatio, innerWidth < 820 ? 1 : 1.5);
+    function redim() {
+      const e = echelle();
+      canvas.width = Math.floor(canvas.clientWidth * e);
+      canvas.height = Math.floor(canvas.clientHeight * e);
+      gl.viewport(0, 0, canvas.width, canvas.height);
+      gl.uniform2f(uRes, canvas.width, canvas.height);
+    }
+    redim(); addEventListener("resize", redim);
+
+    const souris = { x: 0, y: 0 }, cible = { x: 0, y: 0 };
+    addEventListener("pointermove", (e) => {
+      cible.x = (e.clientX / innerWidth) * 2 - 1;
+      cible.y = -((e.clientY / innerHeight) * 2 - 1);
+    });
+
+    let visible = true;
+    new IntersectionObserver(([e]) => { visible = e.isIntersecting; }).observe(canvas);
+    const debut = performance.now();
+    function rendu() {
+      if (visible) {
+        souris.x += (cible.x - souris.x) * 0.05;
+        souris.y += (cible.y - souris.y) * 0.05;
+        gl.uniform1f(uTime, reduit ? 12.0 : (performance.now() - debut) / 1000 + 12.0);
+        gl.uniform2f(uMouse, souris.x, souris.y);
+        gl.drawArrays(gl.TRIANGLES, 0, 3);
+      }
+      if (!reduit) requestAnimationFrame(rendu);
+    }
+    rendu();
+  }
+
+  // ---------- Intro : loader, titre, cordon ----------
+  const cordon = document.querySelector(".cordon");
+  const forme = { y: 212 };
+  const majCordon = () => cordon.setAttribute("d", `M 84 92 Q 500 ${forme.y} 916 92`);
+
+  document.fonts.ready.then(() => {
+    const titre = document.querySelector(".hero__titre");
+    const split = SplitText.create(titre, { type: "chars", mask: "chars" });
+    const tl = gsap.timeline({ defaults: { ease: "expo.out" } });
+
+    if (reduit) {
+      gsap.set(".loader", { autoAlpha: 0 });
+      split.revert(); titre.classList.add("is-laiton");
+      return;
+    }
+    tl.to(".loader__line", { scaleX: 1, duration: 0.9, ease: "power2.inOut" })
+      .to(".loader", { yPercent: -100, duration: 1, ease: "expo.inOut" }, "+=0.15")
+      .from(split.chars, { yPercent: 115, duration: 1.4, stagger: 0.06 }, "-=0.45")
+      .from(".hero__kicker, .hero__sous, .hero__ctas", { y: 24, autoAlpha: 0, duration: 1.1, stagger: 0.12 }, "-=1.1")
+      .from(".poteau", { y: 60, autoAlpha: 0, duration: 1, stagger: 0.1 }, "-=1")
+      .from(cordon, { drawSVG: "50% 50%", duration: 1.6, ease: "power3.inOut" }, "-=0.8")
+      .add(() => { split.revert(); titre.classList.add("is-laiton"); });
+
+    // Le cordon se balance doucement
+    gsap.to(forme, { y: 200, duration: 2.6, ease: "sine.inOut", yoyo: true, repeat: -1, onUpdate: majCordon });
+  });
+
+  // Le contenu du hero s'eloigne au scroll
+  gsap.to(".hero__contenu", {
+    yPercent: -18, autoAlpha: 0.2, ease: "none",
+    scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true }
+  });
+
+  // ---------- Depuis 1984 : compte a rebours des annees ----------
+  const annee = document.querySelector(".depuis__annee");
+  const compteur = { v: 2026 };
+  const tlDepuis = gsap.timeline({
+    scrollTrigger: { trigger: ".depuis", start: "top top", end: "+=140%", scrub: 0.6, pin: true }
+  });
+  tlDepuis
+    .to(compteur, { v: 1984, ease: "power1.inOut", duration: 1, onUpdate: () => { annee.textContent = Math.round(compteur.v); } })
+    .to(annee, { color: "#f0d49b", duration: 0.2 }, 0.85)
+    .to(".depuis__ans", { autoAlpha: 1, y: -10, duration: 0.2 }, 0.85);
+
+  // ---------- Revelations de texte ligne par ligne ----------
+  document.fonts.ready.then(() => {
+    document.querySelectorAll(".split-lignes").forEach((el) => {
+      const s = SplitText.create(el, { type: "lines", mask: "lines" });
+      gsap.from(s.lines, {
+        yPercent: 110, duration: 1.2, stagger: 0.1, ease: "expo.out",
+        scrollTrigger: { trigger: el, start: "top 85%" }
+      });
+    });
+  });
+
+  // ---------- Le hall : arche revelee + parallaxe ----------
+  gsap.fromTo(".arche__clip", { clipPath: "inset(100% 0% 0% 0%)" }, {
+    clipPath: "inset(0% 0% 0% 0%)", ease: "none",
+    scrollTrigger: { trigger: ".arche", start: "top 85%", end: "top 30%", scrub: true }
+  });
+  gsap.fromTo(".arche img", { scale: 1.35 }, {
+    scale: 1, ease: "none",
+    scrollTrigger: { trigger: ".arche", start: "top bottom", end: "bottom top", scrub: true }
+  });
+  gsap.fromTo(".medaillon", { yPercent: 40 }, {
+    yPercent: -20, ease: "none",
+    scrollTrigger: { trigger: ".hall__visuel", start: "top bottom", end: "bottom top", scrub: true }
+  });
+
+  // ---------- Sejours : rangees en cascade ----------
+  gsap.from(".rangee", {
+    y: 40, autoAlpha: 0, duration: 1, stagger: 0.1, ease: "expo.out",
+    scrollTrigger: { trigger: ".tarifs", start: "top 80%" }
+  });
+
+  // ---------- Salles : compteurs ----------
+  document.querySelectorAll(".capacite__n").forEach((el) => {
+    gsap.from(el, {
+      textContent: 0, duration: 1.8, ease: "power3.out", snap: { textContent: 1 },
+      scrollTrigger: { trigger: el, start: "top 88%" }
+    });
+  });
+  gsap.from(".capacite", {
+    y: 50, autoAlpha: 0, duration: 1.1, stagger: 0.1, ease: "expo.out",
+    scrollTrigger: { trigger: ".capacites", start: "top 85%" }
+  });
+</script>
+</body>
+</html>

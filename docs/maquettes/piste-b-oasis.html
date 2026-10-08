@@ -1,0 +1,577 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Assonvon · Piste B · Oasis</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..800,0..100;1,9..144,300..800,0..100&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* Tokens du theme - piste B */
+  :root {
+    --nuit-verte: #0b1f19;
+    --feuillage: #1d4a37;
+    --lagon: #2a9db5;
+    --mosaique: #17577f;
+    --croton: #c8442c;
+    --curcuma: #e7b33f;
+    --sable: #f3ead8;
+    --sable-2: #e9dcc3;
+    --encre: #10241d;
+
+    --f-display: "Fraunces", Georgia, serif;
+    --f-texte: "Figtree", system-ui, sans-serif;
+
+    --gouttiere: clamp(16px, 4vw, 56px);
+    --ease-doux: cubic-bezier(.22, 1, .36, 1);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html.lenis, html.lenis body { height: auto; }
+  .lenis.lenis-smooth { scroll-behavior: auto !important; }
+  body {
+    background: var(--nuit-verte); color: var(--sable);
+    font-family: var(--f-texte); font-size: 16px; line-height: 1.6;
+    -webkit-font-smoothing: antialiased; overflow-x: hidden;
+  }
+  a { color: inherit; text-decoration: none; }
+  img { display: block; max-width: 100%; }
+  .display { font-family: var(--f-display); font-variation-settings: "SOFT" 100; }
+
+  /* Navigation */
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px var(--gouttiere);
+  }
+  /* Logo hors de la nav pour que le mode difference agisse sur toute la page */
+  .nav__logo { position: fixed; top: 22px; left: var(--gouttiere); z-index: 51; font-family: var(--f-display); font-variation-settings: "SOFT" 100; font-style: italic; font-size: 24px; line-height: 1; mix-blend-mode: difference; color: #fff; }
+  .nav__liens { display: flex; gap: 28px; font-size: 14px; }
+  .nav__cta { padding: 10px 20px; border-radius: 999px; background: var(--curcuma); color: var(--encre); font-weight: 600; font-size: 14px; }
+  @media (max-width: 820px) { .nav__liens { display: none; } }
+
+  /* Hero : eau et mosaique */
+  .hero { position: relative; height: 100svh; min-height: 600px; overflow: hidden; background: var(--mosaique); }
+  .hero canvas { position: absolute; inset: 0; width: 100%; height: 100%; cursor: crosshair; }
+  .hero__voile {
+    position: absolute; inset: 0; pointer-events: none;
+    background:
+      radial-gradient(55% 40% at 50% 50%, rgba(8,30,40,.55), transparent 75%),
+      linear-gradient(to bottom, rgba(11,31,25,.35), transparent 30%, transparent 70%, rgba(11,31,25,.6));
+  }
+  .feuillage { position: absolute; pointer-events: none; z-index: 3; overflow: visible; }
+  /* Ombres de palmes projetees sur le bassin */
+  .feuillage--ombre { z-index: 1; opacity: .5; filter: blur(5px); mix-blend-mode: multiply; }
+  .feuillage--ombre .f { fill: #02130f; }
+  .nervure { stroke: rgba(255, 236, 200, .35); stroke-width: 2.5; stroke-linecap: round; fill: none; }
+  .feuillage--hg { width: clamp(300px, 46vw, 720px); left: -8%; top: -14%; }
+  .feuillage--bd { width: clamp(320px, 50vw, 780px); right: -10%; bottom: -20%; }
+  .feuillage--hd { width: clamp(200px, 26vw, 420px); right: -4%; top: -10%; }
+  @media (max-width: 820px) {
+    .feuillage--hg { width: 78vw; left: -26%; top: -10%; }
+    .feuillage--bd { width: 90vw; right: -34%; bottom: -12%; }
+    .feuillage--hd { width: 52vw; right: -20%; top: -6%; }
+  }
+  .hero__contenu {
+    position: relative; z-index: 4; height: 100%; pointer-events: none;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
+    padding: 0 var(--gouttiere);
+  }
+  .hero__kicker { font-size: 13px; letter-spacing: .22em; text-transform: uppercase; opacity: .9; }
+  .hero__titre {
+    font-family: var(--f-display); font-variation-settings: "SOFT" 100, "opsz" 144;
+    font-style: italic; font-weight: 340;
+    font-size: clamp(72px, 17vw, 260px); line-height: .92; letter-spacing: -.03em;
+    margin-top: 12px; color: var(--sable);
+    text-shadow: 0 10px 40px rgba(5,25,35,.35);
+  }
+  .hero__sous { margin-top: 14px; font-family: var(--f-display); font-variation-settings: "SOFT" 100; font-size: clamp(18px, 2.2vw, 28px); }
+  .hero__ctas { display: flex; gap: 12px; margin-top: 32px; flex-wrap: wrap; justify-content: center; pointer-events: auto; }
+  .btn { display: inline-flex; padding: 15px 26px; border-radius: 999px; font-weight: 600; font-size: 15px; transition: transform .5s var(--ease-doux), background .4s; }
+  .btn:hover { transform: translateY(-3px); }
+  .btn--plein { background: var(--curcuma); color: var(--encre); }
+  .btn--ligne { border: 1.5px solid rgba(243,234,216,.6); }
+  .hero__astuce {
+    position: absolute; left: 50%; bottom: 22px; transform: translateX(-50%); z-index: 4;
+    font-size: 12px; letter-spacing: .18em; text-transform: uppercase; opacity: .75; pointer-events: none;
+  }
+
+  /* Titres de section */
+  .eyebrow { font-size: 13px; letter-spacing: .22em; text-transform: uppercase; color: var(--curcuma); }
+  .h2 {
+    font-family: var(--f-display); font-variation-settings: "SOFT" 100, "opsz" 144; font-weight: 360;
+    font-size: clamp(42px, 6.4vw, 104px); line-height: .98; letter-spacing: -.025em;
+  }
+  .h2 em { font-style: italic; color: var(--lagon); }
+
+  /* Le patio */
+  .patio {
+    padding: clamp(96px, 14vw, 200px) var(--gouttiere);
+    display: grid; grid-template-columns: 1fr 1.1fr; gap: clamp(32px, 6vw, 96px); align-items: center;
+  }
+  .patio__texte p { margin-top: 24px; max-width: 440px; font-size: 18px; color: rgba(243,234,216,.8); }
+  .fenetres { position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: clamp(12px, 2vw, 24px); }
+  .fenetre { border-radius: 999px 999px 18px 18px; overflow: hidden; aspect-ratio: 3 / 4.4; }
+  .fenetre:nth-child(2) { margin-top: 30%; }
+  .fenetre__clip { width: 100%; height: 100%; overflow: hidden; }
+  .fenetre img { width: 100%; height: 120%; object-fit: cover; filter: saturate(1.15) contrast(1.06) brightness(.98); }
+  @media (max-width: 820px) { .patio { grid-template-columns: 1fr; } }
+
+  /* Espaces : defilement horizontal */
+  .espaces { overflow: hidden; }
+  .espaces__piste { display: flex; width: max-content; height: 100svh; }
+  .panneau {
+    width: min(70vw, 980px); height: 100%; flex-shrink: 0;
+    padding: clamp(80px, 10vh, 120px) clamp(24px, 5vw, 72px) clamp(40px, 8vh, 80px);
+    display: flex; flex-direction: column; justify-content: space-between;
+    border-right: 1px solid rgba(0,0,0,.08);
+  }
+  .panneau--intro { width: min(60vw, 760px); background: var(--nuit-verte); justify-content: center; }
+  .panneau--piscine { background: var(--lagon); color: #06242c; }
+  .panneau--resto { background: var(--croton); color: #2a0a05; }
+  .panneau--bar { background: var(--curcuma); color: #2f2104; }
+  .panneau--salles { background: var(--feuillage); color: var(--sable); }
+  .panneau--bientot { background: var(--sable); color: var(--encre); }
+  .panneau__num { font-size: 14px; letter-spacing: .2em; font-weight: 600; }
+  .panneau__verbe {
+    font-family: var(--f-display); font-variation-settings: "SOFT" 100, "opsz" 144; font-style: italic; font-weight: 330;
+    font-size: clamp(80px, 14vw, 230px); line-height: .85; letter-spacing: -.04em;
+  }
+  .panneau__bas { display: flex; justify-content: space-between; align-items: end; gap: 24px; flex-wrap: wrap; }
+  .panneau__bas h3 { font-family: var(--f-display); font-variation-settings: "SOFT" 100; font-size: clamp(26px, 3vw, 40px); font-weight: 500; }
+  .panneau__bas p { max-width: 360px; font-size: 17px; }
+  @media (max-width: 820px) {
+    .panneau, .panneau--intro { width: 88vw; }
+  }
+
+  /* Celebrer : cercles de capacite */
+  .celebrer { padding: clamp(96px, 14vw, 200px) var(--gouttiere); background: var(--sable); color: var(--encre); text-align: center; }
+  .celebrer .eyebrow { color: var(--croton); }
+  .celebrer .h2 em { color: var(--feuillage); }
+  .celebrer p.sous { margin-top: 18px; color: rgba(16,36,29,.7); font-size: 18px; }
+  .cercles { display: flex; justify-content: center; align-items: flex-end; gap: clamp(8px, 2vw, 24px); margin-top: clamp(48px, 7vw, 96px); }
+  .cercle {
+    border-radius: 50%; display: grid; place-items: center; text-align: center;
+    width: calc(var(--d) * min(30vw, 400px)); aspect-ratio: 1;
+  }
+  .cercle:nth-child(1) { background: var(--lagon); color: #06242c; }
+  .cercle:nth-child(2) { background: var(--curcuma); color: #2f2104; }
+  .cercle:nth-child(3) { background: var(--croton); color: #2a0a05; }
+  .cercle:nth-child(4) { background: var(--feuillage); color: var(--sable); }
+  .cercle b { display: block; font-family: var(--f-display); font-variation-settings: "SOFT" 100; font-weight: 500; font-size: clamp(22px, 3.4vw, 56px); line-height: 1; }
+  .cercle span { font-size: clamp(10px, 1vw, 13px); letter-spacing: .14em; text-transform: uppercase; }
+  .celebrer__types { margin-top: 40px; font-family: var(--f-display); font-variation-settings: "SOFT" 100; font-style: italic; font-size: clamp(20px, 2.4vw, 30px); }
+
+  /* Sejours */
+  .sejours { padding: clamp(80px, 10vw, 140px) var(--gouttiere); display: flex; gap: 32px; justify-content: space-between; align-items: end; flex-wrap: wrap; }
+  .sejours__prix { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 28px; }
+  .prix { padding: 14px 20px; border-radius: 16px; background: rgba(243,234,216,.07); border: 1px solid rgba(243,234,216,.14); }
+  .prix b { font-family: var(--f-display); font-variation-settings: "SOFT" 100; font-size: 28px; font-weight: 500; }
+  .prix small { display: block; font-size: 12px; opacity: .7; }
+
+  /* Planche DA */
+  .planche { background: var(--sable-2); color: var(--encre); padding: clamp(64px, 10vw, 140px) var(--gouttiere); }
+  .planche .eyebrow { color: var(--croton); }
+  .planche h3 { font-family: var(--f-display); font-variation-settings: "SOFT" 100; font-size: clamp(28px, 4vw, 48px); font-weight: 400; margin: 12px 0 40px; }
+  .nuancier { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 12px; }
+  .pastille { border-radius: 16px; overflow: hidden; background: #fff; }
+  .pastille__c { height: 90px; }
+  .pastille__t { padding: 10px 12px; font-size: 12px; line-height: 1.4; }
+  .pastille__t b { display: block; font-weight: 600; }
+  .typos { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; margin-top: 40px; }
+  .typo, .signature { background: #fff; border-radius: 16px; padding: 28px; }
+  .typo__ex { font-size: clamp(40px, 10vw, 56px); line-height: 1; margin: 10px 0; }
+  .signature { margin-top: 24px; max-width: 900px; }
+  @media (max-width: 720px) { .typos { grid-template-columns: minmax(0, 1fr); } }
+
+  .pied { padding: 56px var(--gouttiere) 88px; display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap; color: rgba(243,234,216,.75); }
+  .pied__logo { font-family: var(--f-display); font-variation-settings: "SOFT" 100; font-style: italic; font-size: 30px; color: var(--sable); }
+  .pied__digifaz { width: 100%; padding-top: 24px; border-top: 1px solid rgba(243,234,216,.12); font-size: 12px; letter-spacing: .1em; opacity: .55; }
+
+  .badge {
+    position: fixed; left: 12px; bottom: 12px; z-index: 60; padding: 8px 14px; border-radius: 999px;
+    font-size: 11px; letter-spacing: .06em; background: rgba(11,31,25,.85); color: var(--sable);
+    border: 1px solid rgba(243,234,216,.25); backdrop-filter: blur(8px);
+  }
+</style>
+</head>
+<body>
+
+<a href="#" class="nav__logo">Assonvon</a>
+<nav class="nav">
+  <span></span>
+  <div class="nav__liens">
+    <a href="#patio">Le patio</a><a href="#espaces">Espaces</a><a href="#celebrer">Salles</a><a href="#sejours">Séjours</a>
+  </div>
+  <a class="nav__cta" href="tel:+2250748103484">Réserver</a>
+</nav>
+
+<header class="hero">
+  <canvas id="eau" aria-hidden="true"></canvas>
+  <div class="hero__voile"></div>
+
+  <!-- Feuillages tropicaux : crotons, cordylines, palmes -->
+  <svg class="feuillage feuillage--hg feuillage--ombre" viewBox="-400 -400 800 800" aria-hidden="true">
+    <defs>
+      <linearGradient id="vert" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#0d2c20"/><stop offset="1" stop-color="#2f6f4a"/></linearGradient>
+      <linearGradient id="vert2" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#123826"/><stop offset="1" stop-color="#4c8a52"/></linearGradient>
+      <linearGradient id="croton" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#5e140f"/><stop offset=".6" stop-color="#c8442c"/><stop offset="1" stop-color="#e7b33f"/></linearGradient>
+      <linearGradient id="cordyline" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#3a0f1c"/><stop offset="1" stop-color="#a42d3f"/></linearGradient>
+    </defs>
+    <g transform="rotate(130)">
+      <g transform="rotate(-38)"><path class="f" fill="url(#vert)" d="M0,0 C30,-60 28,-200 0,-300 C-28,-200 -30,-60 0,0Z"/></g>
+      <g transform="rotate(-18)"><path class="f" fill="url(#cordyline)" d="M0,0 C22,-60 20,-220 0,-340 C-20,-220 -22,-60 0,0Z"/></g>
+      <g transform="rotate(2)"><path class="f" fill="url(#vert2)" d="M0,0 C34,-70 32,-230 0,-360 C-32,-230 -34,-70 0,0Z"/></g>
+      <g transform="rotate(22)"><path class="f" fill="url(#croton)" d="M0,0 C40,-50 44,-180 0,-270 C-44,-180 -40,-50 0,0Z"/></g>
+      <g transform="rotate(42)"><path class="f" fill="url(#vert)" d="M0,0 C26,-60 24,-190 0,-290 C-24,-190 -26,-60 0,0Z"/></g>
+      <g transform="rotate(60)"><path class="f" fill="url(#cordyline)" d="M0,0 C20,-50 18,-170 0,-250 C-18,-170 -20,-50 0,0Z"/></g>
+    </g>
+  </svg>
+  <svg class="feuillage feuillage--hd feuillage--ombre" viewBox="-300 -300 600 600" aria-hidden="true">
+    <g transform="rotate(205)">
+      <g transform="rotate(-25)"><path class="f" fill="url(#croton)" d="M0,0 C36,-46 40,-160 0,-240 C-40,-160 -36,-46 0,0Z"/></g>
+      <g transform="rotate(0)"><path class="f" fill="url(#vert2)" d="M0,0 C26,-60 24,-190 0,-280 C-24,-190 -26,-60 0,0Z"/></g>
+      <g transform="rotate(25)"><path class="f" fill="url(#cordyline)" d="M0,0 C20,-50 18,-170 0,-250 C-18,-170 -20,-50 0,0Z"/></g>
+    </g>
+  </svg>
+  <svg class="feuillage feuillage--bd" viewBox="-400 -400 800 800" aria-hidden="true">
+    <g transform="rotate(-40)">
+      <g transform="rotate(-50)"><path class="f" fill="url(#cordyline)" d="M0,0 C22,-60 20,-220 0,-330 C-20,-220 -22,-60 0,0Z"/></g>
+      <g transform="rotate(-30)"><path class="f" fill="url(#vert)" d="M0,0 C30,-60 28,-210 0,-320 C-28,-210 -30,-60 0,0Z"/></g>
+      <g transform="rotate(-8)"><path class="f" fill="url(#croton)" d="M0,0 C44,-50 48,-190 0,-290 C-48,-190 -44,-50 0,0Z"/></g>
+      <g transform="rotate(14)"><path class="f" fill="url(#vert2)" d="M0,0 C34,-70 32,-240 0,-370 C-32,-240 -34,-70 0,0Z"/></g>
+      <g transform="rotate(36)"><path class="f" fill="url(#vert)" d="M0,0 C26,-60 24,-190 0,-290 C-24,-190 -26,-60 0,0Z"/></g>
+      <g transform="rotate(56)"><path class="f" fill="url(#croton)" d="M0,0 C36,-46 40,-160 0,-240 C-40,-160 -36,-46 0,0Z"/></g>
+    </g>
+  </svg>
+
+  <div class="hero__contenu">
+    <p class="hero__kicker">Hôtel ★★★ · Yopougon, Abidjan</p>
+    <h1 class="hero__titre">Assonvon</h1>
+    <p class="hero__sous">Une oasis au cœur de Yopougon, depuis 1984.</p>
+    <div class="hero__ctas">
+      <a class="btn btn--plein" href="tel:+2250748103484">Réserver un séjour</a>
+      <a class="btn btn--ligne" href="#patio">Entrer dans le patio</a>
+    </div>
+  </div>
+  <p class="hero__astuce">Touchez l'eau</p>
+</header>
+
+<section class="patio" id="patio">
+  <div class="patio__texte">
+    <p class="eyebrow">Le patio</p>
+    <h2 class="h2 split-lignes" style="margin-top:16px">La fraîcheur,<br><em>au cœur</em> de la ville</h2>
+    <p class="split-lignes">Bassins de mosaïque, crotons et cordylines : au centre de l'hôtel, un patio tropical garde la fraîcheur, à l'abri de l'agitation de Yopougon.</p>
+  </div>
+  <div class="fenetres">
+    <div class="fenetre"><div class="fenetre__clip"><img src="assets/patio-bassins.jpg" alt="Galerie couverte longeant les bassins en mosaïque du patio"></div></div>
+    <div class="fenetre"><div class="fenetre__clip"><img src="assets/patio-jardin.jpg" alt="Plantes tropicales et bassin en mosaïque bleue du patio"></div></div>
+  </div>
+</section>
+
+<section class="espaces" id="espaces">
+  <div class="espaces__piste">
+    <div class="panneau panneau--intro">
+      <p class="eyebrow">Les espaces</p>
+      <h2 class="h2" style="margin-top:16px">Tout un monde<br>sous <em>un même toit</em></h2>
+    </div>
+    <article class="panneau panneau--piscine">
+      <span class="panneau__num">01 · PISCINE</span>
+      <div class="panneau__verbe">Plonger</div>
+      <div class="panneau__bas"><h3>La piscine</h3><p>Le rendez-vous des après-midi ensoleillés, entre deux réunions ou en famille le week-end.</p></div>
+    </article>
+    <article class="panneau panneau--resto">
+      <span class="panneau__num">02 · RESTAURANT</span>
+      <div class="panneau__verbe">Savourer</div>
+      <div class="panneau__bas"><h3>Le restaurant</h3><p>Une table pour les résidents comme pour les visiteurs, du déjeuner au dîner.</p></div>
+    </article>
+    <article class="panneau panneau--bar">
+      <span class="panneau__num">03 · BAR</span>
+      <div class="panneau__verbe">Trinquer</div>
+      <div class="panneau__bas"><h3>Le bar</h3><p>Pour prolonger la soirée, au calme, dans un cadre qui a vu passer quatre décennies d'Abidjan.</p></div>
+    </article>
+    <article class="panneau panneau--salles">
+      <span class="panneau__num">04 · SALLES</span>
+      <div class="panneau__verbe">Célébrer</div>
+      <div class="panneau__bas"><h3>Salles de cérémonie</h3><p>Mariages, baptêmes, réunions et conférences, de 100 à 350 places.</p></div>
+    </article>
+    <article class="panneau panneau--bientot">
+      <span class="panneau__num">05 · BIENTÔT</span>
+      <div class="panneau__verbe">Rêver</div>
+      <div class="panneau__bas"><h3>Piscine olympique &amp; cinéma</h3><p>Deux nouveaux espaces en construction pour écrire la suite de l'histoire.</p></div>
+    </article>
+  </div>
+</section>
+
+<section class="celebrer" id="celebrer">
+  <p class="eyebrow">Salles de cérémonie</p>
+  <h2 class="h2 split-lignes" style="margin-top:16px">De 100 à 350 invités,<br><em>votre fête</em> a sa salle</h2>
+  <p class="sous">Quatre salles pour les mariages, baptêmes, réunions et conférences.</p>
+  <div class="cercles">
+    <div class="cercle" style="--d:.535"><div><b>100</b><span>places</span></div></div>
+    <div class="cercle" style="--d:.655"><div><b>150</b><span>places</span></div></div>
+    <div class="cercle" style="--d:.756"><div><b>200</b><span>places</span></div></div>
+    <div class="cercle" style="--d:1"><div><b>350</b><span>places</span></div></div>
+  </div>
+  <p class="celebrer__types">Mariages · Baptêmes · Réunions · Conférences</p>
+</section>
+
+<section class="sejours" id="sejours">
+  <div>
+    <p class="eyebrow">Séjours</p>
+    <h2 class="h2" style="margin-top:16px">110 chambres<br><em>à partir de 20 000 FCFA</em></h2>
+    <div class="sejours__prix">
+      <div class="prix"><b>20 000</b><small>FCFA · la nuit</small></div>
+      <div class="prix"><b>25 000</b><small>FCFA · la nuit</small></div>
+      <div class="prix"><b>30 000</b><small>FCFA · la nuit</small></div>
+      <div class="prix"><b>40 000</b><small>FCFA · la nuit</small></div>
+    </div>
+  </div>
+  <a class="btn btn--plein" href="tel:+2250748103484">Réserver au 07 48 10 34 84</a>
+</section>
+
+<section class="planche">
+  <p class="eyebrow">Planche de direction artistique</p>
+  <h3>Piste B · Oasis</h3>
+  <div class="nuancier">
+    <div class="pastille"><div class="pastille__c" style="background:#0b1f19"></div><div class="pastille__t"><b>nuit-verte</b>#0B1F19</div></div>
+    <div class="pastille"><div class="pastille__c" style="background:#1d4a37"></div><div class="pastille__t"><b>feuillage</b>#1D4A37</div></div>
+    <div class="pastille"><div class="pastille__c" style="background:#17577f"></div><div class="pastille__t"><b>mosaïque</b>#17577F</div></div>
+    <div class="pastille"><div class="pastille__c" style="background:#2a9db5"></div><div class="pastille__t"><b>lagon</b>#2A9DB5</div></div>
+    <div class="pastille"><div class="pastille__c" style="background:#c8442c"></div><div class="pastille__t"><b>croton</b>#C8442C</div></div>
+    <div class="pastille"><div class="pastille__c" style="background:#e7b33f"></div><div class="pastille__t"><b>curcuma</b>#E7B33F</div></div>
+    <div class="pastille"><div class="pastille__c" style="background:#f3ead8;border-bottom:1px solid #e0d3bb"></div><div class="pastille__t"><b>sable</b>#F3EAD8</div></div>
+  </div>
+  <div class="typos">
+    <div class="typo"><span class="eyebrow">Titres</span><div class="typo__ex" style="font-family:var(--f-display);font-variation-settings:'SOFT' 100;font-style:italic;font-weight:340">Assonvon</div>Fraunces (axe « Soft ») : un serif organique et chaleureux, aux courbes douces comme l'eau.</div>
+    <div class="typo"><span class="eyebrow">Textes</span><div class="typo__ex" style="font-family:var(--f-texte);font-weight:600">Plonger</div>Figtree : une sans-serif ronde et amicale, très lisible sur mobile.</div>
+  </div>
+  <div class="signature"><span class="eyebrow">Animation signature</span><p style="margin-top:10px">Le hero est un <b>bassin vivant</b> : un shader WebGL recrée la mosaïque bleue du patio sous une eau traversée de caustiques. Chaque geste du visiteur (souris ou doigt) crée des <b>ondes</b> à la surface. Des <b>feuillages tropicaux</b> ondulent au premier plan puis s'écartent au scroll, comme si l'on entrait dans le patio. Ensuite, les espaces défilent à l'horizontale.</p></div>
+</section>
+
+<footer class="pied">
+  <div><div class="pied__logo">Assonvon</div><p>Hôtel ★★★ · Yopougon, depuis 1984</p></div>
+  <div><p>Rue O111, Yopougon Assonvon, Abidjan</p><p>Réception : <a href="tel:+2250748103484">07 48 10 34 84</a></p></div>
+  <p class="pied__digifaz">Proposition de site réalisée par Digifaz</p>
+</footer>
+
+<a class="badge" href="index.html">Maquette · Piste B · Oasis</a>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/SplitText.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.26/dist/lenis.min.js"></script>
+<script>
+  gsap.registerPlugin(ScrollTrigger, SplitText);
+  const reduit = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  if (!reduit) {
+    const lenis = new Lenis({ autoRaf: false, lerp: 0.1 });
+    lenis.on("scroll", ScrollTrigger.update);
+    gsap.ticker.add((t) => lenis.raf(t * 1000));
+    gsap.ticker.lagSmoothing(0);
+  }
+
+  // ---------- Shader : mosaique sous l'eau + ondes ----------
+  const canvas = document.getElementById("eau");
+  const gl = canvas.getContext("webgl", { antialias: false, alpha: false });
+  const NB_ONDES = 8;
+  const frag = `
+    precision highp float;
+    uniform vec2 uRes;
+    uniform float uTime;
+    uniform vec3 uOndes[${NB_ONDES}];
+    float hash(vec2 p){ p = fract(p*vec2(234.34, 435.345)); p += dot(p, p+34.23); return fract(p.x*p.y); }
+    float caustique(vec2 p, float t){
+      vec2 i = p; float c = 1.0; float inten = 0.005;
+      for (int n = 0; n < 4; n++) {
+        float tt = t*(1.0 - (3.5/float(n + 1)));
+        i = p + vec2(cos(tt - i.x) + sin(tt + i.y), sin(tt - i.y) + cos(tt + i.x));
+        c += 1.0/length(vec2(p.x/(sin(i.x + tt)/inten), p.y/(cos(i.y + tt)/inten)));
+      }
+      c /= 4.0;
+      c = 1.17 - pow(c, 1.4);
+      return pow(abs(c), 8.0);
+    }
+    void main(){
+      vec2 uv = gl_FragCoord.xy/uRes;
+      float asp = uRes.x/uRes.y;
+      vec2 p = vec2(uv.x*asp, uv.y);
+      // Ondes creees par le visiteur
+      vec2 dep = vec2(0.0);
+      for (int k = 0; k < ${NB_ONDES}; k++) {
+        vec3 o = uOndes[k];
+        float age = uTime - o.z;
+        if (age > 0.0 && age < 5.0) {
+          vec2 dv = p - vec2(o.x*asp, o.y);
+          float d = length(dv);
+          float front = age*0.32;
+          float onde = sin((d - front)*55.0)*exp(-abs(d - front)*14.0)*exp(-age*0.8);
+          dep += (dv/max(d, 0.001))*onde*0.014;
+        }
+      }
+      dep += vec2(sin(p.y*9.0 + uTime*0.9), cos(p.x*8.0 + uTime*0.7))*0.0035;
+      vec2 q = p + dep;
+      // Mosaique
+      vec2 g = q*56.0; vec2 id = floor(g); vec2 f = fract(g);
+      float joint = smoothstep(0.0, 0.07, f.x)*smoothstep(0.0, 0.07, f.y)*smoothstep(1.0, 0.93, f.x)*smoothstep(1.0, 0.93, f.y);
+      float h = hash(id);
+      vec3 tuile = mix(vec3(0.06, 0.33, 0.52), vec3(0.15, 0.56, 0.68), h);
+      tuile = mix(tuile, vec3(0.04, 0.22, 0.40), step(0.86, h));
+      tuile = mix(tuile, vec3(0.52, 0.78, 0.80), step(0.975, h));
+      vec3 col = mix(vec3(0.55, 0.68, 0.68)*0.7, tuile, joint);
+      // Caustiques
+      float c = caustique(q*6.2831*1.05 - 250.0, uTime*0.45 + 23.0);
+      col += vec3(0.8, 1.0, 1.0)*clamp(c, 0.0, 1.0)*0.75;
+      col *= 0.82 + 0.25*smoothstep(0.0, 1.0, uv.y);
+      col += (hash(gl_FragCoord.xy + fract(uTime)) - 0.5)*0.025;
+      gl_FragColor = vec4(col, 1.0);
+    }`;
+  const vert = "attribute vec2 p; void main(){ gl_Position = vec4(p, 0.0, 1.0); }";
+
+  function compiler(type, src) {
+    const s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s);
+    if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) console.error(gl.getShaderInfoLog(s));
+    return s;
+  }
+  if (gl) {
+    const prog = gl.createProgram();
+    gl.attachShader(prog, compiler(gl.VERTEX_SHADER, vert));
+    gl.attachShader(prog, compiler(gl.FRAGMENT_SHADER, frag));
+    gl.linkProgram(prog); gl.useProgram(prog);
+    gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 3,-1, -1,3]), gl.STATIC_DRAW);
+    const loc = gl.getAttribLocation(prog, "p");
+    gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+    const uRes = gl.getUniformLocation(prog, "uRes");
+    const uTime = gl.getUniformLocation(prog, "uTime");
+    const uOndes = gl.getUniformLocation(prog, "uOndes");
+
+    const echelle = () => Math.min(devicePixelRatio, innerWidth < 820 ? 1 : 1.5);
+    function redim() {
+      const e = echelle();
+      canvas.width = Math.floor(canvas.clientWidth * e);
+      canvas.height = Math.floor(canvas.clientHeight * e);
+      gl.viewport(0, 0, canvas.width, canvas.height);
+      gl.uniform2f(uRes, canvas.width, canvas.height);
+    }
+    redim(); addEventListener("resize", redim);
+
+    // File circulaire des ondes : x, y (0..1) et instant de depart
+    const ondes = new Float32Array(NB_ONDES * 3).fill(-100);
+    let idx = 0;
+    const debut = performance.now();
+    const maintenant = () => (performance.now() - debut) / 1000;
+    function onde(x, y) {
+      ondes[idx * 3] = x; ondes[idx * 3 + 1] = y; ondes[idx * 3 + 2] = maintenant();
+      idx = (idx + 1) % NB_ONDES;
+    }
+    const pos = (e) => {
+      const r = canvas.getBoundingClientRect();
+      return [(e.clientX - r.left) / r.width, 1 - (e.clientY - r.top) / r.height];
+    };
+    let derniere = 0, dernierPt = [0, 0];
+    canvas.addEventListener("pointermove", (e) => {
+      const [x, y] = pos(e);
+      const t = maintenant();
+      if (t - derniere > 0.18 && Math.hypot(x - dernierPt[0], y - dernierPt[1]) > 0.03) {
+        onde(x, y); derniere = t; dernierPt = [x, y];
+      }
+    });
+    canvas.addEventListener("pointerdown", (e) => { const [x, y] = pos(e); onde(x, y); });
+    // Gouttes automatiques pour les ecrans tactiles et les visiteurs immobiles
+    if (!reduit) setInterval(() => onde(0.2 + Math.random() * 0.6, 0.2 + Math.random() * 0.6), 2600);
+
+    let visible = true;
+    new IntersectionObserver(([e]) => { visible = e.isIntersecting; }).observe(canvas);
+    function rendu() {
+      if (visible) {
+        gl.uniform1f(uTime, reduit ? 4.0 : maintenant());
+        gl.uniform3fv(uOndes, ondes);
+        gl.drawArrays(gl.TRIANGLES, 0, 3);
+      }
+      if (!reduit) requestAnimationFrame(rendu);
+    }
+    rendu();
+  }
+
+  // ---------- Feuillages : balancement, parallaxe souris, ouverture au scroll ----------
+  if (!reduit) {
+    document.querySelectorAll(".feuillage .f").forEach((f, i) => {
+      const feuille = f.parentNode;
+      // Nervure centrale sur les feuilles du premier plan
+      if (!feuille.closest(".feuillage--ombre")) {
+        const b = f.getBBox();
+        const n = document.createElementNS("http://www.w3.org/2000/svg", "path");
+        n.setAttribute("class", "nervure");
+        n.setAttribute("d", `M0,-8 L0,${b.y + 14}`);
+        feuille.appendChild(n);
+      }
+      gsap.to(feuille, {
+        rotation: "+=" + gsap.utils.random(-6, 6), svgOrigin: "0 0",
+        duration: gsap.utils.random(2.6, 4.2), ease: "sine.inOut", yoyo: true, repeat: -1, delay: i * 0.15
+      });
+    });
+    const couches = [
+      { el: ".feuillage--hg", p: 28 }, { el: ".feuillage--hd", p: 16 }, { el: ".feuillage--bd", p: 36 }
+    ].map((c) => ({
+      x: gsap.quickTo(c.el, "x", { duration: 1.2, ease: "power3.out" }),
+      y: gsap.quickTo(c.el, "y", { duration: 1.2, ease: "power3.out" }),
+      p: c.p
+    }));
+    addEventListener("pointermove", (e) => {
+      const nx = e.clientX / innerWidth - 0.5, ny = e.clientY / innerHeight - 0.5;
+      couches.forEach((c) => { c.x(-nx * c.p); c.y(-ny * c.p); });
+    });
+  }
+  const sortie = { trigger: ".hero", start: "top top", end: "bottom top", scrub: true };
+  gsap.to(".feuillage--hg", { xPercent: -45, yPercent: -30, scale: 1.4, ease: "none", scrollTrigger: sortie });
+  gsap.to(".feuillage--hd", { xPercent: 45, yPercent: -35, scale: 1.3, ease: "none", scrollTrigger: sortie });
+  gsap.to(".feuillage--bd", { xPercent: 40, yPercent: 30, scale: 1.4, ease: "none", scrollTrigger: sortie });
+  gsap.to(".hero__contenu", { yPercent: 20, autoAlpha: 0, ease: "none", scrollTrigger: sortie });
+
+  // ---------- Intro ----------
+  document.fonts.ready.then(() => {
+    const split = SplitText.create(".hero__titre", { type: "chars", mask: "chars" });
+    if (reduit) return;
+    gsap.timeline({ defaults: { ease: "expo.out" } })
+      .from(".feuillage", { scale: 1.6, autoAlpha: 0, duration: 2, stagger: 0.12 })
+      .from(split.chars, { yPercent: 120, rotate: 6, duration: 1.4, stagger: 0.05 }, 0.3)
+      .from(".hero__kicker, .hero__sous, .hero__ctas, .hero__astuce", { y: 20, autoAlpha: 0, duration: 1, stagger: 0.1 }, 0.7);
+
+    document.querySelectorAll(".split-lignes").forEach((el) => {
+      const s = SplitText.create(el, { type: "lines", mask: "lines" });
+      gsap.from(s.lines, { yPercent: 110, duration: 1.2, stagger: 0.1, ease: "expo.out", scrollTrigger: { trigger: el, start: "top 85%" } });
+    });
+  });
+
+  // ---------- Le patio : fenetres revelees ----------
+  document.querySelectorAll(".fenetre").forEach((f, i) => {
+    gsap.fromTo(f.querySelector(".fenetre__clip"), { clipPath: "inset(100% 0% 0% 0%)" }, {
+      clipPath: "inset(0% 0% 0% 0%)", ease: "none",
+      scrollTrigger: { trigger: f, start: "top 90%", end: "top 40%", scrub: true }
+    });
+    gsap.fromTo(f.querySelector("img"), { yPercent: -16 }, {
+      yPercent: 0, ease: "none",
+      scrollTrigger: { trigger: f, start: "top bottom", end: "bottom top", scrub: true }
+    });
+  });
+
+  // ---------- Espaces : defilement horizontal epingle ----------
+  const piste = document.querySelector(".espaces__piste");
+  const distance = () => piste.scrollWidth - innerWidth;
+  gsap.to(piste, {
+    x: () => -distance(), ease: "none",
+    scrollTrigger: { trigger: ".espaces", start: "top top", end: () => "+=" + distance(), scrub: 0.8, pin: true, invalidateOnRefresh: true }
+  });
+
+  // ---------- Celebrer : les cercles grandissent ----------
+  gsap.from(".cercle", {
+    scale: 0, duration: 1.4, stagger: 0.12, ease: "elastic.out(1, 0.6)", transformOrigin: "50% 100%",
+    scrollTrigger: { trigger: ".cercles", start: "top 85%" }
+  });
+</script>
+</body>
+</html>

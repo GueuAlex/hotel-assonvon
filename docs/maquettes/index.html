@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Assonvon · Pistes de DA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Bodoni+Moda:ital,opsz,wght@1,6..96,500&family=Fraunces:ital,opsz,wght,SOFT@1,9..144,340,100&family=Syne:wght@800&display=swap" rel="stylesheet">
+<style>
+  :root { --fond: #f4efe8; --encre: #1b1714; --gris: #6f655c; --ligne: #e2d9ce; }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--fond); color: var(--encre); font-family: "Instrument Sans", system-ui, sans-serif; line-height: 1.55; padding: clamp(24px, 5vw, 64px) clamp(16px, 4vw, 56px); }
+  header { max-width: 900px; margin-bottom: 40px; }
+  .kicker { font-size: 12px; letter-spacing: .24em; text-transform: uppercase; color: var(--gris); }
+  h1 { font-size: clamp(32px, 5vw, 56px); line-height: 1.05; margin: 10px 0 14px; font-weight: 600; letter-spacing: -.02em; }
+  header p { color: var(--gris); max-width: 680px; }
+  .pistes { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+  .piste { display: flex; flex-direction: column; border-radius: 20px; overflow: hidden; background: #fff; border: 1px solid var(--ligne); color: inherit; text-decoration: none; transition: transform .4s cubic-bezier(.16,1,.3,1), box-shadow .4s; }
+  .piste:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(0,0,0,.08); }
+  .piste__vis { height: 200px; display: grid; place-items: center; font-size: 56px; }
+  .a { background: radial-gradient(circle at 30% 30%, #6b2f22, #160a07); color: #f0d49b; font-family: "Bodoni Moda", serif; font-style: italic; }
+  .b { background: radial-gradient(circle at 70% 40%, #2a9db5, #17577f); color: #f3ead8; font-family: "Fraunces", serif; font-style: italic; font-variation-settings: "SOFT" 100; }
+  .c { background: #0c0a08; color: #efe7da; font-family: "Syne", sans-serif; font-weight: 800; text-transform: uppercase; letter-spacing: -.03em; }
+  .piste__txt { padding: 22px; }
+  .piste__txt h2 { font-size: 20px; font-weight: 600; }
+  .piste__txt p { color: var(--gris); font-size: 15px; margin-top: 8px; }
+  .piste__txt span { display: inline-block; margin-top: 14px; font-size: 13px; font-weight: 600; }
+  footer { margin-top: 40px; font-size: 13px; color: var(--gris); }
+</style>
+</head>
+<body>
+  <header>
+    <p class="kicker">Hôtel Assonvon · Yopougon · Directions artistiques</p>
+    <h1>Trois pistes pour le site de l'Hôtel Assonvon</h1>
+    <p>Chaque maquette présente le hero avec son animation signature, une ou deux sections types et une planche de direction artistique (couleurs, typographies). Bougez la souris, touchez l'écran, faites défiler.</p>
+  </header>
+  <div class="pistes">
+    <a class="piste" href="piste-a-marbre-laiton.html">
+      <div class="piste__vis a">Assonvon</div>
+      <div class="piste__txt"><h2>A · Marbre &amp; Laiton</h2><p>L'héritage d'un grand hôtel de 1984. Un marbre rose vivant en WebGL, un titre en laiton, un cordon de velours, et les années qui défilent jusqu'à 1984.</p><span>Voir la piste →</span></div>
+    </a>
+    <a class="piste" href="piste-b-oasis.html">
+      <div class="piste__vis b">Assonvon</div>
+      <div class="piste__txt"><h2>B · Oasis</h2><p>Le patio tropical : un bassin de mosaïque vivant qui réagit au toucher, des feuillages en parallaxe, et des espaces qui défilent à l'horizontale.</p><span>Voir la piste →</span></div>
+    </a>
+    <a class="piste" href="piste-c-galerie-nuit.html">
+      <div class="piste__vis c">Asson</div>
+      <div class="piste__txt"><h2>C · Galerie de nuit</h2><p>L'art ivoirien en vedette : le masque du hall révélé au projecteur, le motif de vagues des fauteuils, une typographie sculpturale.</p><span>Voir la piste →</span></div>
+    </a>
+  </div>
+  <footer>Maquettes de travail · Proposition de site réalisée par Digifaz</footer>
+</body>
+</html>
