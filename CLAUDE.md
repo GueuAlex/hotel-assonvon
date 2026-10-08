@@ -64,7 +64,7 @@ Trois pistes proposées dans `docs/maquettes/` (sommaire : `docs/maquettes/index
   - image de partage générée au build, favicon ;
   - vérifié en desktop et en mobile 375 px ; lint et build OK ;
   - repo GitHub créé et démo déployée sur Vercel ;
-  - redéploiement automatique non branché : l'application GitHub de Vercel n'a pas accès au repo. Redéployer avec `vercel --prod --yes` depuis ce dossier.
+  - redéploiement automatique branché (`vercel git connect`) : chaque push sur `main` met la démo à jour.
 - Décisions :
   - catégories de chambres nommées « Catégorie I à IV » sans unité (prix « FCFA ») tant que l'hôtel n'a pas confirmé ;
   - salles nommées « Salle I à IV » ;
